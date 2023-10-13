@@ -11,7 +11,7 @@ export default function Header() {
               className="group/logo flex flex-row transition transform hover:-translate-y-0.5 duration-300"
             >
               <div className="bg-clip-text flex bg-gradient-to-r from-red-500 to-amber-500">
-                <AutoDP className="fill-[#EFF6EE] group-hover/logo:fill-orange-400 transform transition duration-500" />
+                <AutoDP className="fill-[#EFF6EE] group-hover/logo:fill-orange-400 transform transition duration-300" />
                 <span className="m-auto group-hover/logo:text-transparent duration-300">
                   AutoDP
                 </span>
