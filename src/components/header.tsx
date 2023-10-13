@@ -1,5 +1,5 @@
-import AutoDP from "../../public/autodp.svg";
-import Link from "next/link";
+import AutoDP from '../../public/autodp.svg'
+import Link from 'next/link'
 
 export default function Header() {
   return (
@@ -46,5 +46,5 @@ export default function Header() {
         </nav>
       </header>
     </>
-  );
+  )
 }
