@@ -2,6 +2,7 @@
 
 import Header from '@/components/header'
 import Link from 'next/link'
+import Logo from '../../../public/logo.svg'
 
 export default function LoginPage() {
   let handleLogin = (e: { preventDefault: () => void }) => {
@@ -9,8 +10,11 @@ export default function LoginPage() {
     // Some Auth logic
   }
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
-      <div className='w-full bg-white rounded-lg shadow  mt-0 max-w-md p-0'>
+    <div className='flex flex-col items-center justify-center'>
+      <Link href='/' className='flex items-center text-2xl font-semibold -mb-10 text-gray-900'>
+        <Logo className='w-full h-full fill-white' alt='AutoDP' />
+      </Link>
+      <div className='w-full bg-white rounded-lg shadow mt-0 max-w-md p-0'>
         <div className='p-6 space-y-4'>
           <h1
             className='flex justify-center text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl'>
