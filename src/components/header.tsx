@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <>
       <header className="container mx-auto text-2xl font-bold max-w-full">
-        <nav className="py-1 flex flex-row flex-wrap rounded-b-lg max-h-20 justify-start bg-[#273043]/90 text-[#EFF6EE]">
+        <nav className="py-1 flex flex-row flex-wrap rounded-b-lg max-h-20 justify-start bg-[#273043]/80 text-[#EFF6EE]">
           <div className="flex flex-row basis-1/4">
             <Link
               href="/"
