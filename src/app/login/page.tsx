@@ -1,6 +1,7 @@
 'use client'
 
 import Header from '@/components/header'
+import Link from 'next/link'
 
 export default function LoginPage() {
   let handleLogin = (e: { preventDefault: () => void }) => {
@@ -34,13 +35,15 @@ export default function LoginPage() {
               <div className='flex items-start'>
                 <div className='flex items-center h-5'>
                   <input type='checkbox' id='remember' aria-describedby='remember'
-                         className='w-4 h-4 border border-gray-300 rounded checked:accent-blue-400' />
+                         className='w-4 h-4 border cursor-pointer border-gray-300 rounded checked:accent-blue-400' />
                 </div>
                 <div className='ml-2 text-sm align-top -mb-1 inline-flex select-none'>
                   <label htmlFor='remember' className='text-gray-500'>Remember me</label>
                 </div>
               </div>
-              <a href='#' className='select-none text-sm font-medium text-blue-400 hover:underline'>Forgot password?</a>
+              <Link href='/forgot_password' className='select-none text-sm font-medium text-blue-400 hover:underline'>
+                Forgot password?
+              </Link>
             </div>
             <button type='submit'
                     className='w-full text-gray-900/70 bg-gradient-to-bl hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
@@ -49,9 +52,9 @@ export default function LoginPage() {
             <p className='text-sm font-light text-gray-500'>
               Don’t have an account yet?
               {' '}
-              <a href='/register' className='font-medium text-primary-600 hover:underline'>
+              <Link href='/register' className='font-medium text-primary-600 hover:underline'>
                 Register
-              </a>
+              </Link>
             </p>
           </form>
         </div>
