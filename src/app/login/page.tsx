@@ -13,7 +13,7 @@ export default function LoginPage() {
         <div className='p-6 space-y-4'>
           <h1
             className='flex justify-center text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl'>
-            Log in
+            Login
           </h1>
           <form className='space-y-6'>
             <div>
@@ -34,17 +34,17 @@ export default function LoginPage() {
               <div className='flex items-start'>
                 <div className='flex items-center h-5'>
                   <input type='checkbox' id='remember' aria-describedby='remember'
-                         className='w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300' />
+                         className='w-4 h-4 border border-gray-300 rounded checked:accent-blue-400' />
                 </div>
                 <div className='ml-2 text-sm align-top -mb-1 inline-flex select-none'>
                   <label htmlFor='remember' className='text-gray-500'>Remember me</label>
                 </div>
               </div>
-              <a href='#' className='select-none text-sm font-medium text-blue-600 hover:underline'>Forgot password?</a>
+              <a href='#' className='select-none text-sm font-medium text-blue-400 hover:underline'>Forgot password?</a>
             </div>
             <button type='submit'
-                    className='w-full text-black bg-gradient-to-bl hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
-                    onClick={handleLogin}>Log in
+                    className='w-full text-gray-900/70 bg-gradient-to-bl hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+                    onClick={handleLogin}>Sign in
             </button>
             <p className='text-sm font-light text-gray-500'>
               Don’t have an account yet?
