@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { LogoLink } from '@/components/logoLink'
 import { CustomInput } from '@/components/customInput'
 import { CustomCheckbox } from '@/components/customCheckbox'
+import { CustomButton } from '@/components/customButton'
 
 export default function LoginPage() {
   let handleLogin = (e: { preventDefault: () => void }) => {
@@ -42,13 +43,11 @@ export default function LoginPage() {
                 Forgot password?
               </Link>
             </div>
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-blue-300/70 px-5 py-2.5 text-sm font-medium text-gray-900/70 duration-200 hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            <CustomButton
+              text={'Sign in'}
+              type_={'submit'}
               onClick={handleLogin}
-            >
-              Sign in
-            </button>
+            />
             <p className="text-sm font-light text-gray-500">
               Don’t have an account yet?{' '}
               <Link
