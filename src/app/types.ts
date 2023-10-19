@@ -12,3 +12,8 @@ export interface User {
   created_at: string
   updated_at: string
 }
+
+export interface AuthTokens {
+  accessToken: string
+  refreshToken: string
+}
