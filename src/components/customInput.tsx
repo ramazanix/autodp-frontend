@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEventHandler } from 'react'
 
 interface Props {
   id: string
@@ -6,6 +6,8 @@ interface Props {
   inputType: string
   placeholder: string
   required: boolean
+  value: string
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   name?: string
 }
 
@@ -15,6 +17,8 @@ export const CustomInput: React.FC<Props> = ({
   inputType,
   placeholder,
   required,
+  value,
+  handleChange,
   name,
 }) => {
   return (
@@ -37,6 +41,8 @@ export const CustomInput: React.FC<Props> = ({
         className="box-shadow block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-[inset_0_0_0px_1000px_rgb(249,250,251)] duration-300 selection:bg-blue-200 focus:border-amber-50 focus:outline-none focus:ring focus:ring-red-300/90"
         placeholder={placeholder}
         required={required}
+        value={value}
+        onChange={(e) => handleChange(e)}
       />
     </div>
   )

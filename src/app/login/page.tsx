@@ -5,11 +5,22 @@ import { LogoLink } from '@/components/logoLink'
 import { CustomInput } from '@/components/customInput'
 import { CustomCheckbox } from '@/components/customCheckbox'
 import { CustomButton } from '@/components/customButton'
+import { useLogin } from '@/utils/useLogin'
+import React, { useState } from 'react'
 
 export default function LoginPage() {
-  let handleLogin = (e: { preventDefault: () => void }) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value)
+  }
+  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+  }
+
+  let handleLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    // Some Auth logic
+    console.log(username, password)
   }
   return (
     <div className="mt-12 flex select-none flex-col items-center justify-center">
@@ -26,6 +37,8 @@ export default function LoginPage() {
               placeholder={'example@mail.com'}
               text={'Email'}
               required={true}
+              value={username}
+              handleChange={onUsernameChange}
             />
             <CustomInput
               id={'password'}
@@ -33,6 +46,8 @@ export default function LoginPage() {
               placeholder={'••••••••'}
               text={'Password'}
               required={true}
+              value={password}
+              handleChange={onPasswordChange}
             />
             <div className="flex items-center justify-between">
               <CustomCheckbox id={'remember'} text={'Remember me'} />
