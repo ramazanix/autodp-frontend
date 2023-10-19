@@ -18,9 +18,10 @@ export default function LoginPage() {
     setPassword(e.target.value)
   }
 
-  let handleLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
+  let handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     console.log(username, password)
+    // Auth logic
   }
   return (
     <div className="mt-12 flex select-none flex-col items-center justify-center">
