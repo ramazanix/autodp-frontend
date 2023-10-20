@@ -1,6 +1,4 @@
 import axios, { AxiosInstance } from 'axios'
-import Cookies from 'js-cookie'
-import { User } from '@/app/types'
 
 export class AuthService {
   protected readonly instance: AxiosInstance
@@ -10,31 +8,54 @@ export class AuthService {
       baseURL: url,
       timeout: 30000,
       timeoutErrorMessage: 'Time out!',
+      responseType: 'json',
     })
   }
 
-  login = (username: string, password: string) => {
-    const res = this.instance
+  login = async (username: string, password: string) => {
+    const res = await this.instance
       .post('/auth/login', {
         username,
         password,
       })
-      .then((res) => {
-        return {
-          accessToken: res.data.access_token,
-          refreshToken: res.data.refresh_token,
-        }
-      })
+      .catch((e) => console.log(e))
+    return {
+      accessToken: res?.data.access_token,
+      refreshToken: res?.data.refresh_token,
+    }
   }
 
-  static currentUser = async (accessToken: string) => {
-    const res = await this.prototype.instance.get('/users/me', {
-      headers: {
-        Authorization: `Bearer ${Cookies.get('accessToken')}`,
-      },
-    })
+  currentUser = async (accessToken: string) => {
+    const res = await this.instance
+      .get('/users/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .catch((e) => console.log(e))
     return {
-      currentUser: res.data,
+      id: res?.data.id,
+      username: res?.data.username,
+      role: res?.data.role,
+      createdAt: res?.data.created_at,
+      updatedAt: res?.data.updated_at,
+    }
+  }
+
+  refreshAccessToken = async (refreshToken: string) => {
+    const res = await this.instance
+      .post(
+        '/auth/refresh',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        }
+      )
+      .catch((e) => console.log(e))
+    return {
+      accessToken: res?.data.access_token,
     }
   }
 }
