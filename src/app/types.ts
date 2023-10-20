@@ -9,8 +9,8 @@ export interface User {
   id: UUID
   username: string
   role: Role
-  created_at: string
-  updated_at: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface AuthTokens {
