@@ -13,15 +13,18 @@ export class AuthService {
     })
   }
 
-  static login = async (username: string, password: string) => {
-    const res = await this.prototype.instance.post('/auth/login', {
-      username,
-      password,
-    })
-    return {
-      accessToken: res.data.access_token,
-      refreshToken: res.data.refresh_token,
-    }
+  login = (username: string, password: string) => {
+    const res = this.instance
+      .post('/auth/login', {
+        username,
+        password,
+      })
+      .then((res) => {
+        return {
+          accessToken: res.data.access_token,
+          refreshToken: res.data.refresh_token,
+        }
+      })
   }
 
   static currentUser = async (accessToken: string) => {
