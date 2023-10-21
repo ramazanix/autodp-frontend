@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { AuthTokens, IUser } from '@/app/types'
 import { authService } from '@/services'
