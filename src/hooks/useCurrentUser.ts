@@ -1,47 +1,66 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Cookies from 'js-cookie'
-import { User } from '@/app/types'
+import { AuthTokens, IUser } from '@/app/types'
 import { authService } from '@/services'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context'
 
 export const useCurrentUser = (router: AppRouterInstance) => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<IUser | null>(null)
+  const [tokens, setTokens] = useState<AuthTokens>({
+    accessToken: Cookies.get('accessToken'),
+    refreshToken: Cookies.get('refreshToken'),
+  })
+
   useEffect(() => {
-    const accessToken = Cookies.get('accessToken')
-    if (accessToken) {
+    if (tokens.accessToken) {
       authService
-        .currentUser(accessToken)
+        .currentUser(tokens.accessToken)
         .then((userData) => {
           setUser(userData)
         })
         .catch((e) => {
           if (e.response.status === 422 || e.response.status === 401) {
-            const refreshToken = Cookies.get('refreshToken')
-            if (refreshToken) {
+            if (tokens.refreshToken) {
               authService
-                .refreshAccessToken(refreshToken)
+                .refreshAccessToken(tokens.refreshToken)
                 .then((accessToken) => {
-                  Cookies.set('accessToken', accessToken.accessToken)
+                  Cookies.set('accessToken', accessToken?.accessToken)
+                  setTokens({
+                    ...tokens,
+                    accessToken: accessToken?.accessToken,
+                  })
                 })
                 .catch((e) => {
+                  Cookies.remove('accessToken')
+                  Cookies.remove('refreshToken')
                   router.push('/login')
                 })
-            } else router.push('/login')
+            } else {
+              Cookies.remove('accessToken')
+              Cookies.remove('refreshToken')
+              router.push('/login')
+            }
           }
         })
     } else {
-      const refreshToken = Cookies.get('refreshToken')
-      if (refreshToken) {
+      if (tokens.refreshToken) {
         authService
-          .refreshAccessToken(refreshToken)
+          .refreshAccessToken(tokens.refreshToken)
           .then((accessToken) => {
-            Cookies.set('accessToken', accessToken.accessToken)
+            Cookies.set('accessToken', accessToken?.accessToken)
+            setTokens({ ...tokens, accessToken: accessToken?.accessToken })
           })
           .catch((e) => {
+            Cookies.remove('accessToken')
+            Cookies.remove('refreshToken')
             router.push('/login')
           })
-      } else router.push('/login')
+      } else {
+        Cookies.remove('accessToken')
+        Cookies.remove('refreshToken')
+        router.push('/login')
+      }
     }
-  }, [])
+  }, [tokens])
   return { user }
 }
