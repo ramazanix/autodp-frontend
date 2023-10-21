@@ -14,48 +14,54 @@ export class AuthService {
 
   login = async (username: string, password: string) => {
     const res = await this.instance
-      .post('/auth/login', {
+      .post('/login', {
         username,
         password,
       })
-      .catch((e) => console.log(e))
-    return {
-      accessToken: res?.data.access_token,
-      refreshToken: res?.data.refresh_token,
+      .catch((e) => {
+        console.log(e)
+      })
+    if (res) {
+      return {
+        accessToken: res.data.access_token,
+        refreshToken: res.data.refresh_token,
+      }
     }
   }
 
   currentUser = async (accessToken: string) => {
-    const res = await this.instance
-      .get('/users/me', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .catch((e) => console.log(e))
-    return {
-      id: res?.data.id,
-      username: res?.data.username,
-      role: res?.data.role,
-      createdAt: res?.data.created_at,
-      updatedAt: res?.data.updated_at,
+    const res = await this.instance.get('/users/me', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      baseURL: '//localhost:80',
+    })
+    if (res) {
+      return {
+        id: res.data.id,
+        username: res.data.username,
+        role: res.data.role,
+        createdAt: res.data.created_at,
+        updatedAt: res.data.updated_at,
+      }
     }
+    return null
   }
 
   refreshAccessToken = async (refreshToken: string) => {
-    const res = await this.instance
-      .post(
-        '/auth/refresh',
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        }
-      )
-      .catch((e) => console.log(e))
-    return {
-      accessToken: res?.data.access_token,
+    const res = await this.instance.post(
+      '/refresh',
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      }
+    )
+    if (res) {
+      return {
+        accessToken: res?.data.access_token,
+      }
     }
   }
 }
