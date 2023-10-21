@@ -7,11 +7,13 @@ import { CustomCheckbox } from '@/components/customCheckbox'
 import { CustomButton } from '@/components/customButton'
 import { useLogin } from '@/hooks/useLogin'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const { login } = useLogin()
+  const router = useRouter()
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value)
@@ -21,9 +23,11 @@ export default function LoginPage() {
     setPassword(e.target.value)
   }
 
-  let handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    login(username, password)
+    login(username, password).then((authTokens) => {
+      if (authTokens) router.push('/')
+    })
   }
   return (
     <div className="mt-12 flex select-none flex-col items-center justify-center">
