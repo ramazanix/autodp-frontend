@@ -33,12 +33,10 @@ export const useCurrentUser = (router: AppRouterInstance) => {
                 .catch((e) => {
                   Cookies.remove('accessToken')
                   Cookies.remove('refreshToken')
-                  router.push('/login')
                 })
             } else {
               Cookies.remove('accessToken')
               Cookies.remove('refreshToken')
-              router.push('/login')
             }
           }
         })
@@ -53,12 +51,10 @@ export const useCurrentUser = (router: AppRouterInstance) => {
           .catch((e) => {
             Cookies.remove('accessToken')
             Cookies.remove('refreshToken')
-            router.push('/login')
           })
       } else {
         Cookies.remove('accessToken')
         Cookies.remove('refreshToken')
-        router.push('/login')
       }
     }
   }, [tokens])
