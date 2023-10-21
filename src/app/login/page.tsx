@@ -5,23 +5,25 @@ import { LogoLink } from '@/components/logoLink'
 import { CustomInput } from '@/components/customInput'
 import { CustomCheckbox } from '@/components/customCheckbox'
 import { CustomButton } from '@/components/customButton'
-import { useLogin } from '@/utils/useLogin'
+import { useLogin } from '@/hooks/useLogin'
 import React, { useState } from 'react'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const { login } = useLogin()
+
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value)
   }
+
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
   let handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    console.log(username, password)
-    // Auth logic
+    login(username, password)
   }
   return (
     <div className="mt-12 flex select-none flex-col items-center justify-center">
@@ -33,10 +35,10 @@ export default function LoginPage() {
           </h1>
           <form className="space-y-6">
             <CustomInput
-              id={'email'}
+              id={'username'}
               inputType={'text'}
-              placeholder={'example@mail.com'}
-              text={'Email'}
+              placeholder={'username'}
+              text={'Username'}
               required={true}
               value={username}
               handleChange={onUsernameChange}
