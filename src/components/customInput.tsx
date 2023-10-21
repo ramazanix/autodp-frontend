@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler } from 'react'
+import React from 'react'
 
 interface Props {
   id: string
@@ -43,6 +43,7 @@ export const CustomInput: React.FC<Props> = ({
         required={required}
         value={value}
         onChange={(e) => handleChange(e)}
+        autoComplete={'on'}
       />
     </div>
   )
