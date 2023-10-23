@@ -10,23 +10,41 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [userData, setUserData] = useState({
+    username: '',
+    password: '',
+    rememberMe: false,
+  })
   const { login } = useLogin()
   const router = useRouter()
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value)
+    setUserData({
+      ...userData,
+      username: e.target.value,
+    })
   }
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
+    setUserData({
+      ...userData,
+      password: e.target.value,
+    })
+  }
+
+  const onRememberClick = () => {
+    setUserData({
+      ...userData,
+      rememberMe: !userData.rememberMe,
+    })
   }
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    login(username, password).then((authTokens) => {
-      if (authTokens) router.push('/')
+    login(userData).then((authTokens) => {
+      if (authTokens) {
+        router.push('/')
+      }
     })
   }
   return (
@@ -44,7 +62,7 @@ export default function LoginPage() {
               placeholder={'username'}
               text={'Username'}
               required={true}
-              value={username}
+              value={userData.username}
               handleChange={onUsernameChange}
             />
             <CustomInput
@@ -53,11 +71,15 @@ export default function LoginPage() {
               placeholder={'••••••••'}
               text={'Password'}
               required={true}
-              value={password}
+              value={userData.password}
               handleChange={onPasswordChange}
             />
             <div className="flex items-center justify-between">
-              <CustomCheckbox id={'remember'} text={'Remember me'} />
+              <CustomCheckbox
+                id={'remember'}
+                text={'Remember me'}
+                onClick={onRememberClick}
+              />
               <Link
                 href="/forgot_password"
                 className="text-sm font-medium text-blue-400 hover:underline"
