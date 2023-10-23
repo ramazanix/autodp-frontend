@@ -64,4 +64,15 @@ export class AuthService {
       }
     }
   }
+  revokeAccessToken = async (accessToken: string) => {
+    await this.instance.delete('/access_revoke', {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+  }
+
+  revokeRefreshToken = async (refreshToken: string) => {
+    await this.instance.delete('/refresh_revoke', {
+      headers: { Authorization: `Bearer ${refreshToken}` },
+    })
+  }
 }
