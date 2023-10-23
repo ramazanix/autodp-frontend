@@ -20,6 +20,10 @@ export const useCurrentUser = (router: AppRouterInstance) => {
         })
         .catch((e) => {
           if (e.response.status === 422 || e.response.status === 401) {
+            authService
+              .revokeAccessToken(tokens.accessToken!)
+              .catch((e) => console.log(e))
+
             if (tokens.refreshToken) {
               authService
                 .refreshAccessToken(tokens.refreshToken)
@@ -30,7 +34,7 @@ export const useCurrentUser = (router: AppRouterInstance) => {
                     accessToken: accessToken?.accessToken,
                   })
                 })
-                .catch((e) => {
+                .catch(() => {
                   Cookies.remove('accessToken')
                   Cookies.remove('refreshToken')
                 })
@@ -48,7 +52,7 @@ export const useCurrentUser = (router: AppRouterInstance) => {
             Cookies.set('accessToken', accessToken?.accessToken)
             setTokens({ ...tokens, accessToken: accessToken?.accessToken })
           })
-          .catch((e) => {
+          .catch(() => {
             Cookies.remove('accessToken')
             Cookies.remove('refreshToken')
           })
