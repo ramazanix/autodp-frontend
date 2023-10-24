@@ -41,8 +41,8 @@ export class AuthService {
         id: res.data.id,
         username: res.data.username,
         role: res.data.role,
-        createdAt: res.data.created_at,
-        updatedAt: res.data.updated_at,
+        created_at: res.data.created_at,
+        updated_at: res.data.updated_at,
       }
     }
     return null
