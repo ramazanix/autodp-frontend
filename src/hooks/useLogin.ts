@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie'
 import { IAuthTokens } from '@/app/types'
 import { authService } from '@/services'
-import React from 'react'
 
 interface Props {
   username: string
