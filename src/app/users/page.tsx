@@ -1,32 +1,24 @@
 'use client'
 
 import Header from '@/components/header'
-import { useState, useEffect } from 'react'
-import { IUser } from '@/app/types'
+import { useUsers } from '@/hooks/useUsers'
+import React, { useState } from 'react'
+import { UsersList } from '@/components/usersList'
 
-export default function UsersPage() {
-  const [users, setUsers] = useState<IUser[]>([])
+export default function UsersPage(searchInput: string) {
+  const limit = 10
+  const { usersList } = useUsers({ limit })
+  const [inputText, setInputText] = useState('')
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let lowerCase = e.target.value.toLowerCase()
+    setInputText(lowerCase)
+  }
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const response = await fetch('/api/users')
-      const data = await response.json()
-      setUsers(data)
-    }
-    fetchUsers().catch(console.error)
-  }, [])
   return (
     <>
       <Header />
-      <div>
-        {users.map((user, idx) => {
-          return (
-            <p key={user.id}>
-              {idx + 1} {user.username} {user.role.name} {user.created_at}
-            </p>
-          )
-        })}
-      </div>
+      <input id="users-filter" onChange={inputHandler} value={inputText} />
+      <UsersList users={usersList} input={inputText} />
     </>
   )
 }
