@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { AuthTokens, IUser } from '@/app/types'
 import { authService } from '@/services'
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context'
 
-export const useCurrentUser = (router: AppRouterInstance) => {
+export const useCurrentUser = () => {
   const [user, setUser] = useState<IUser | null>(null)
   const [tokens, setTokens] = useState<AuthTokens>({
     accessToken: Cookies.get('accessToken'),
