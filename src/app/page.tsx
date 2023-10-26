@@ -1,17 +1,21 @@
 'use client'
 
 import Header from '@/components/header'
-import { useCurrentUser } from '@/hooks/useCurrentUser'
+import { useContext, useEffect } from 'react'
 import { useLogout } from '@/hooks/useLogout'
 import { useRouter } from 'next/navigation'
+import { AuthContext } from '@/providers'
 
 export default function Home() {
   const router = useRouter()
-  const { user } = useCurrentUser()
+  const { user, setUser } = useContext(AuthContext)
   const { logout } = useLogout()
 
   const handleLogout = () => {
-    logout().then(() => router.push('/login'))
+    logout().then(() => {
+      router.push('/login')
+      setUser!(null)
+    })
   }
 
   return (
