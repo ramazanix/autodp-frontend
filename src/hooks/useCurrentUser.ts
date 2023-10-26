@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { AuthTokens, IUser } from '@/app/types'
 import { authService } from '@/services'
+import { AuthContext } from '@/providers'
 
 export const useCurrentUser = () => {
   const [user, setUser] = useState<IUser | null>(null)
@@ -61,5 +62,7 @@ export const useCurrentUser = () => {
       }
     }
   }, [tokens])
-  return { user }
+  return (
+    <AuthContext.Provider>
+  )
 }
