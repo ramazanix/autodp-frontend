@@ -61,5 +61,5 @@ export const useCurrentUser = () => {
       }
     }
   }, [tokens])
-  return { user, setUser }
+  return { user }
 }
