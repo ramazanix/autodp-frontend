@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex min-h-screen w-full flex-col bg-gradient-to-b from-blue-300 to-red-500/60">
+      <body className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#373B44] to-[#4286f4] text-white">
         {children}
       </body>
     </html>
