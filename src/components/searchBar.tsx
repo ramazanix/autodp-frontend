@@ -27,8 +27,8 @@ export const SearchBar: React.FC<Props> = ({
   color = 'standard',
 }) => {
   return (
-    <div className="relative mx-auto pt-2 text-gray-600">
-      <div className="pointer-events-none absolute inset-0 flex items-center pl-3 pt-2">
+    <div className="relative mx-auto pt-10 text-gray-600">
+      <div className="pointer-events-none absolute inset-0 flex items-center pl-3 pt-10">
         <UserIcon className="h-4 w-4 fill-gray-600" />
       </div>
       <input
