@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <>
-      <Header user={user}/>
+      <Header user={user} />
       {user ? user.username : 'Not Authorized'}
     </>
   )
