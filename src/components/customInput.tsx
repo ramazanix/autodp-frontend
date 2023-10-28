@@ -9,6 +9,8 @@ interface Props {
   value: string
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   name?: string
+  minLength?: number
+  maxLength?: number
 }
 
 export const CustomInput: React.FC<Props> = ({
@@ -20,6 +22,8 @@ export const CustomInput: React.FC<Props> = ({
   value,
   handleChange,
   name,
+  minLength,
+  maxLength,
 }) => {
   return (
     <div>
@@ -44,6 +48,8 @@ export const CustomInput: React.FC<Props> = ({
         value={value}
         onChange={(e) => handleChange(e)}
         autoComplete={'on'}
+        minLength={minLength}
+        maxLength={maxLength}
       />
     </div>
   )
