@@ -17,7 +17,7 @@ export const UsersList: React.FC<Props> = (props) => {
     }
   })
   return (
-    <div className="mt-16 grid grid-flow-row grid-cols-4 gap-4">
+    <div className="mt-16 grid grid-cols-4 gap-4">
       {filteredUsers.map((user) => (
         <UserCard user={user} key={user.id} />
       ))}
