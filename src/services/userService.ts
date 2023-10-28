@@ -19,4 +19,16 @@ export class UserService {
       return res.data
     }
   }
+  create = async (username: string, password: string) => {
+    const res = await this.instance
+      .post('/', { username, password })
+      .catch((e) => console.log(e))
+
+    if (res) {
+      if (res.status === 201) {
+        return { status: 'success' }
+      }
+    }
+    return { status: 'failed' }
+  }
 }
