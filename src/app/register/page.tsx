@@ -7,10 +7,16 @@ import Link from 'next/link'
 import { CustomButton } from '@/components/customButton'
 import { usersService } from '@/services'
 import { useRouter } from 'next/navigation'
+import { FieldError } from '@/app/types'
+import { Capitalize } from '@/utils'
 
 export default function RegisterPage() {
   const router = useRouter()
   const [userData, setUserData] = useState({
+    username: '',
+    password: '',
+  })
+  const [errors, setErrors] = useState({
     username: '',
     password: '',
   })
@@ -20,6 +26,10 @@ export default function RegisterPage() {
       ...userData,
       username: e.target.value,
     })
+    setErrors({
+      ...errors,
+      username: '',
+    })
   }
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,14 +37,28 @@ export default function RegisterPage() {
       ...userData,
       password: e.target.value,
     })
+    setErrors({
+      ...errors,
+      password: '',
+    })
   }
 
   const handleRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    console.log(userData)
-    // usersService
-    //   .create(userData.username, userData.password)
-    //   .then(() => router.push('/login'))
+    usersService.create(userData.username, userData.password).then((res) => {
+      if (res.status === 'failed') {
+        let data: { [key: string]: string } = {}
+
+        res.data.map((field: FieldError) => {
+          let fieldName = field.loc.at(-1)
+          data[fieldName!] = Capitalize(field.msg)
+        })
+        // @ts-ignore
+        setErrors(data)
+      } else {
+        router.push('/login')
+      }
+    })
   }
 
   return (
@@ -55,6 +79,9 @@ export default function RegisterPage() {
               value={userData.username}
               handleChange={onUsernameChange}
             />
+            <span className="text-sm text-red-400">
+              {errors.username}&nbsp;
+            </span>
             <CustomInput
               id={'password'}
               text={'Password'}
@@ -64,6 +91,9 @@ export default function RegisterPage() {
               value={userData.password}
               handleChange={onPasswordChange}
             />
+            <span className="text-sm text-red-400">
+              {errors.password}&nbsp;
+            </span>
             <CustomButton
               text={'Sign up'}
               type_={'submit'}
