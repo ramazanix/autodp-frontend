@@ -22,3 +22,9 @@ export type AuthTokens = {
   accessToken: string | undefined
   refreshToken: string | undefined
 }
+
+export type FieldError = {
+  loc: Array<string>
+  msg: string
+  type: string
+}

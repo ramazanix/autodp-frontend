@@ -19,4 +19,20 @@ export class UserService {
       return res.data
     }
   }
+  create = async (username: string, password: string) => {
+    return await this.instance
+      .post('', { username, password })
+      .then(() => {
+        return {
+          status: 'success',
+          data: [],
+        }
+      })
+      .catch((e) => {
+        return {
+          status: 'failed',
+          data: e.response.data.detail,
+        }
+      })
+  }
 }
