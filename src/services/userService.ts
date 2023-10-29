@@ -20,15 +20,19 @@ export class UserService {
     }
   }
   create = async (username: string, password: string) => {
-    const res = await this.instance
-      .post('/', { username, password })
-      .catch((e) => console.log(e))
-
-    if (res) {
-      if (res.status === 201) {
-        return { status: 'success' }
-      }
-    }
-    return { status: 'failed' }
+    return await this.instance
+      .post('', { username, password })
+      .then(() => {
+        return {
+          status: 'success',
+          data: [],
+        }
+      })
+      .catch((e) => {
+        return {
+          status: 'failed',
+          data: e.response.data.detail,
+        }
+      })
   }
 }
