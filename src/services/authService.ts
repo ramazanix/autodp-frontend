@@ -13,20 +13,28 @@ export class AuthService {
   }
 
   login = async (username: string, password: string) => {
-    const res = await this.instance
+    return await this.instance
       .post('/login', {
         username,
         password,
       })
-      .catch((e) => {
-        console.log(e)
+      .then((res) => {
+        return {
+          status: 'success',
+          statusCode: res.status,
+          data: {
+            accessToken: res.data.access_token,
+            refreshToken: res.data.refresh_token,
+          },
+        }
       })
-    if (res) {
-      return {
-        accessToken: res.data.access_token,
-        refreshToken: res.data.refresh_token,
-      }
-    }
+      .catch((e) => {
+        return {
+          status: 'failed',
+          statusCode: e.response.status,
+          data: e.response.data.detail,
+        }
+      })
   }
 
   currentUser = async (accessToken: string) => {

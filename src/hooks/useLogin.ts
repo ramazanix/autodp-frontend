@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie'
-import { IAuthTokens } from '@/app/types'
 import { authService } from '@/services'
 
 interface Props {
@@ -11,23 +10,20 @@ interface Props {
 export const useLogin = () => {
   const login = async (props: Props) => {
     const { username, password, rememberMe } = props
-    const tokens: IAuthTokens | undefined = await authService.login(
-      username,
-      password
-    )
+    const tokens = await authService.login(username, password)
     const accessExpires = 1 / 48
     const refreshExpires = 15
-    if (tokens) {
+    if (tokens.status === 'success') {
       if (rememberMe) {
-        Cookies.set('accessToken', tokens.accessToken, {
+        Cookies.set('accessToken', tokens.data.accessToken, {
           expires: accessExpires,
         })
-        Cookies.set('refreshToken', tokens.refreshToken, {
+        Cookies.set('refreshToken', tokens.data.refreshToken, {
           expires: refreshExpires,
         })
       } else {
-        Cookies.set('accessToken', tokens.accessToken)
-        Cookies.set('refreshToken', tokens.refreshToken)
+        Cookies.set('accessToken', tokens.data.accessToken)
+        Cookies.set('refreshToken', tokens.data.refreshToken)
       }
     }
     return tokens
