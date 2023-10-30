@@ -87,7 +87,7 @@ export default function LoginPage() {
             <h1 className="flex justify-center text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl">
               Login
             </h1>
-            <span className="text-m flex justify-center pt-1 text-red-400">
+            <span className="text-m flex justify-center pt-1 font-bold text-red-400">
               {errors.form}&nbsp;
             </span>
           </div>
