@@ -25,15 +25,17 @@ export class UserService {
   create = async (username: string, password: string) => {
     return await this.instance
       .post('', { username, password })
-      .then(() => {
+      .then((res) => {
         return {
           status: 'success',
+          statusCode: res.status,
           data: [],
         }
       })
       .catch((e) => {
         return {
           status: 'failed',
+          statusCode: e.response.status,
           data: e.response.data.detail,
         }
       })
