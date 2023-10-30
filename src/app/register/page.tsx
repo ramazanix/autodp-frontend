@@ -8,7 +8,7 @@ import { CustomButton } from '@/components/customButton'
 import { usersService } from '@/services'
 import { useRouter } from 'next/navigation'
 import { FieldError } from '@/app/types'
-import { Capitalize } from '@/utils'
+import { Capitalize, ParseFieldErrors } from '@/utils'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -19,6 +19,7 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState({
     username: '',
     password: '',
+    form: '',
   })
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,18 +46,26 @@ export default function RegisterPage() {
 
   const handleRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    usersService.create(userData.username, userData.password).then((res) => {
-      if (res.status === 'failed') {
-        let data: { [key: string]: string } = {}
 
-        res.data.map((field: FieldError) => {
-          let fieldName = field.loc.at(-1)
-          data[fieldName!] = Capitalize(field.msg)
-        })
-        // @ts-ignore
-        setErrors(data)
-      } else {
+    setErrors({
+      ...errors,
+      form: '',
+    })
+
+    usersService.create(userData.username, userData.password).then((res) => {
+      if (res.status === 'success') {
         router.push('/login')
+      } else {
+        if (res.statusCode === 400) {
+          setErrors({
+            ...errors,
+            form: res.data,
+          })
+        } else if (res.statusCode === 422) {
+          let parsedErrors = ParseFieldErrors(res.data)
+          // @ts-ignore
+          setErrors(parsedErrors)
+        }
       }
     })
   }
@@ -66,9 +75,14 @@ export default function RegisterPage() {
       <LogoLink />
       <div className="mt-0 w-full max-w-md rounded-lg bg-white p-0 shadow">
         <div className="space-y-4 p-6">
-          <h1 className="flex justify-center pb-4 text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl">
-            Registration
-          </h1>
+          <div>
+            <h1 className="flex justify-center text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl">
+              Registration
+            </h1>
+            <span className="text-m flex justify-center pt-1 font-bold text-red-400">
+              {errors.form}&nbsp;
+            </span>
+          </div>
           <form className="space-y-2">
             <CustomInput
               id={'username'}
@@ -94,7 +108,7 @@ export default function RegisterPage() {
             <span className="text-sm text-red-400">
               {errors.password}&nbsp;
             </span>
-            <div className="pt-4">
+            <div className="pt-3">
               <CustomButton
                 text={'Sign up'}
                 type_={'submit'}
