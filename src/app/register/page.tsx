@@ -66,10 +66,10 @@ export default function RegisterPage() {
       <LogoLink />
       <div className="mt-0 w-full max-w-md rounded-lg bg-white p-0 shadow">
         <div className="space-y-4 p-6">
-          <h1 className="flex justify-center text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl">
+          <h1 className="flex justify-center pb-4 text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl">
             Registration
           </h1>
-          <form className="space-y-3">
+          <form className="space-y-2">
             <CustomInput
               id={'username'}
               text={'Username'}
@@ -94,11 +94,13 @@ export default function RegisterPage() {
             <span className="text-sm text-red-400">
               {errors.password}&nbsp;
             </span>
-            <CustomButton
-              text={'Sign up'}
-              type_={'submit'}
-              onClick={handleRegister}
-            />
+            <div className="pt-4">
+              <CustomButton
+                text={'Sign up'}
+                type_={'submit'}
+                onClick={handleRegister}
+              />
+            </div>
             <p className="text-sm font-light text-gray-500">
               Already have an account?{' '}
               <Link
