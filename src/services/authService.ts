@@ -68,7 +68,7 @@ export class AuthService {
     )
     if (res) {
       return {
-        accessToken: res?.data.access_token,
+        accessToken: res.data.access_token,
       }
     }
   }
