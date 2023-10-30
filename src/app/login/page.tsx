@@ -8,12 +8,18 @@ import { CustomButton } from '@/components/customButton'
 import { useLogin } from '@/hooks/useLogin'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { ParseFieldErrors } from '@/utils'
 
 export default function LoginPage() {
   const [userData, setUserData] = useState({
     username: '',
     password: '',
     rememberMe: false,
+  })
+  const [errors, setErrors] = useState({
+    username: '',
+    password: '',
+    form: '',
   })
   const { login } = useLogin()
   const router = useRouter()
@@ -23,12 +29,20 @@ export default function LoginPage() {
       ...userData,
       username: e.target.value,
     })
+    setErrors({
+      ...errors,
+      username: '',
+    })
   }
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({
       ...userData,
       password: e.target.value,
+    })
+    setErrors({
+      ...errors,
+      password: '',
     })
   }
 
@@ -41,9 +55,26 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+
+    setErrors({
+      ...errors,
+      form: '',
+    })
+
     login(userData).then((authTokens) => {
-      if (authTokens) {
+      if (authTokens.status === 'success') {
         router.push('/')
+      } else {
+        if (authTokens.statusCode === 401) {
+          setErrors({
+            ...errors,
+            form: authTokens.data,
+          })
+        } else if (authTokens.statusCode === 422) {
+          let parsedErrors = ParseFieldErrors(authTokens.data)
+          // @ts-ignore
+          setErrors(parsedErrors)
+        }
       }
     })
   }
@@ -52,10 +83,15 @@ export default function LoginPage() {
       <LogoLink />
       <div className="mt-0 w-full max-w-md rounded-lg bg-white p-0 shadow">
         <div className="space-y-4 p-6">
-          <h1 className="flex justify-center text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl">
-            Login
-          </h1>
-          <form className="space-y-6">
+          <div>
+            <h1 className="flex justify-center text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl">
+              Login
+            </h1>
+            <span className="text-m flex justify-center pt-1 text-red-400">
+              {errors.form}&nbsp;
+            </span>
+          </div>
+          <form className="space-y-2">
             <CustomInput
               id={'username'}
               inputType={'text'}
@@ -65,6 +101,9 @@ export default function LoginPage() {
               value={userData.username}
               handleChange={onUsernameChange}
             />
+            <span className="text-sm text-red-400">
+              {errors.username}&nbsp;
+            </span>
             <CustomInput
               id={'password'}
               inputType={'password'}
@@ -74,6 +113,9 @@ export default function LoginPage() {
               value={userData.password}
               handleChange={onPasswordChange}
             />
+            <span className="text-sm text-red-400">
+              {errors.password}&nbsp;
+            </span>
             <div className="flex items-center justify-between">
               <CustomCheckbox
                 id={'remember'}
@@ -81,21 +123,23 @@ export default function LoginPage() {
                 onClick={onRememberClick}
               />
               <Link
-                href="/forgot_password"
+                href={'/forgot_password'}
                 className="text-sm font-medium text-blue-400 hover:underline"
               >
                 Forgot password?
               </Link>
             </div>
-            <CustomButton
-              text={'Sign in'}
-              type_={'submit'}
-              onClick={handleLogin}
-            />
+            <div className="pt-4">
+              <CustomButton
+                text={'Sign in'}
+                type_={'submit'}
+                onClick={handleLogin}
+              />
+            </div>
             <p className="text-sm font-light text-gray-500">
               Don’t have an account yet?{' '}
               <Link
-                href="/register"
+                href={'/register'}
                 className="text-primary-600 font-medium hover:underline"
               >
                 Register
