@@ -69,7 +69,7 @@ export default function RegisterPage() {
           <h1 className="flex justify-center text-xl font-bold leading-tight tracking-tight text-blue-400/90 md:text-2xl">
             Registration
           </h1>
-          <form className="space-y-6">
+          <form className="space-y-3">
             <CustomInput
               id={'username'}
               text={'Username'}
