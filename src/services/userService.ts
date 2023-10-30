@@ -13,12 +13,15 @@ export class UserService {
   }
 
   users = async (limit: number | undefined) => {
-    const query = limit ? `?limit=${limit}` : '/'
-    const res = await this.instance.get(query).catch((e) => console.log(e))
+    const params = { limit: limit }
+    const res = await this.instance
+      .get('', { params: params })
+      .catch((e) => console.log(e))
     if (res) {
       return res.data
     }
   }
+
   create = async (username: string, password: string) => {
     return await this.instance
       .post('', { username, password })
