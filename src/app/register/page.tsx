@@ -7,8 +7,7 @@ import Link from 'next/link'
 import { CustomButton } from '@/components/customButton'
 import { usersService } from '@/services'
 import { useRouter } from 'next/navigation'
-import { FieldError } from '@/app/types'
-import { Capitalize, ParseFieldErrors } from '@/utils'
+import { ParseFieldErrors } from '@/utils'
 
 export default function RegisterPage() {
   const router = useRouter()
