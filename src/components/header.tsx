@@ -38,7 +38,7 @@ export const Header: React.FC<Props> = ({ user }) => {
             <div className="flex basis-1/2 flex-row">
               <div className="m-auto">
                 <Link
-                  href="/users"
+                  href={'/users'}
                   className="flex transform transition duration-300 hover:-translate-y-0.5"
                 >
                   <span className="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text duration-300 hover:text-transparent">
@@ -48,7 +48,7 @@ export const Header: React.FC<Props> = ({ user }) => {
               </div>
               <div className="m-auto">
                 <Link
-                  href="/posts"
+                  href={'/posts'}
                   className="flex transform transition duration-300 hover:-translate-y-0.5"
                 >
                   <span className="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text duration-300 hover:text-transparent">
@@ -83,7 +83,7 @@ export const Header: React.FC<Props> = ({ user }) => {
             <div className="flex basis-1/4 flex-row text-xl font-semibold">
               <div className="m-auto ml-24 flex basis-1/2 justify-end">
                 <Link
-                  href="/login"
+                  href={'/login'}
                   className="flex transform transition duration-300 hover:-translate-y-0.5"
                 >
                   <span className="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text duration-300 hover:text-transparent">
@@ -93,7 +93,7 @@ export const Header: React.FC<Props> = ({ user }) => {
               </div>
               <div className="m-auto -ml-10 flex basis-1/2 justify-end pr-5">
                 <Link
-                  href="/register"
+                  href={'/register'}
                   className="flex transform transition duration-300 hover:-translate-y-0.5"
                 >
                   <span className="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text duration-300 hover:text-transparent">
