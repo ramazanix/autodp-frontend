@@ -7,10 +7,10 @@ import { useRouter } from 'next/navigation'
 
 interface Props {
   user: IUser | null
-  isLoading: boolean
+  userIsLoading: boolean
 }
 
-export const Header: React.FC<Props> = ({ user, isLoading }) => {
+export const Header: React.FC<Props> = ({ user, userIsLoading }) => {
   const router = useRouter()
   const { logout } = useLogout()
 
@@ -59,7 +59,7 @@ export const Header: React.FC<Props> = ({ user, isLoading }) => {
               </div>
             </div>
           </div>
-          {isLoading ? (
+          {userIsLoading ? (
             ''
           ) : user ? (
             <div className="flex basis-1/4 flex-row text-xl font-semibold">
