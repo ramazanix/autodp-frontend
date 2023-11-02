@@ -9,6 +9,7 @@ export const useCurrentUser = () => {
     accessToken: Cookies.get('accessToken'),
     refreshToken: Cookies.get('refreshToken'),
   })
+  const [userIsLoading, setUserIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     if (tokens.accessToken) {
@@ -16,6 +17,7 @@ export const useCurrentUser = () => {
         .currentUser(tokens.accessToken)
         .then((userData) => {
           setUser(userData)
+          setUserIsLoading(false)
         })
         .catch((e) => {
           if (e.response.status === 422 || e.response.status === 401) {
@@ -56,10 +58,11 @@ export const useCurrentUser = () => {
             Cookies.remove('refreshToken')
           })
       } else {
+        setUserIsLoading(false)
         Cookies.remove('accessToken')
         Cookies.remove('refreshToken')
       }
     }
   }, [tokens])
-  return { user }
+  return { user, userIsLoading }
 }
