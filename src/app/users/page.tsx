@@ -8,7 +8,7 @@ import { SearchBar } from '@/components/searchBar'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 
 export default function UsersPage(searchInput: string) {
-  const { user } = useCurrentUser()
+  const { user, userIsLoading } = useCurrentUser()
   const limit = 10
   const { usersList } = useUsers({ limit })
   const [inputText, setInputText] = useState('')
@@ -19,7 +19,7 @@ export default function UsersPage(searchInput: string) {
 
   return (
     <>
-      <Header user={user} />
+      <Header user={user} userIsLoading={userIsLoading} />
       <SearchBar
         id={'users-filter'}
         name={'users-filter'}

@@ -4,12 +4,11 @@ import { Header } from '@/components/header'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 
 export default function Home() {
-  const { user } = useCurrentUser()
-
+  const { user, userIsLoading } = useCurrentUser()
   return (
     <>
-      <Header user={user} />
-      {user ? user.username : 'Not Authorized'}
+      <Header user={user} userIsLoading={userIsLoading} />
+      {userIsLoading ? '' : user ? user.username : 'Not Authorized'}
     </>
   )
 }
