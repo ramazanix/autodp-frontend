@@ -13,10 +13,10 @@ const useUserStore = create<UserState>()(
     (set) => ({
       user: null,
       setUser: (newData) =>
-        set((state) => ({
+        set(() => ({
           user: newData,
         })),
-      resetUser: () => set((state) => ({ user: null })),
+      resetUser: () => set(() => ({ user: null })),
     }),
     { name: 'user-storage', storage: createJSONStorage(() => sessionStorage) }
   )
