@@ -1,22 +1,21 @@
 'use client'
 
 import { Header } from '@/components/header'
-import useUserStore from '@/store/store'
+import useStore from '@/store/useStore'
+import useUserStore from '@/store/useUserStore'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
+  const user = useStore(useUserStore, (state) => state.user)
+  const [userLoading, setUserLoading] = useState(true)
 
   useEffect(() => {
-    useUserStore.persist.rehydrate()
-    setIsLoading(false)
+    setUserLoading(false)
   }, [])
-
-  const user = useUserStore((state) => state.user)
   return (
     <>
-      <Header user={user} userIsLoading={isLoading} />
-      {user ? user.username : 'Not Authorized'}
+      <Header user={user!} userIsLoading={userLoading} />
+      {!userLoading ? user!.username : 'Not Authorized'}
     </>
   )
 }
