@@ -18,7 +18,7 @@ const useUserStore = create<UserState>()(
         })),
       resetUser: () => set((state) => ({ user: null })),
     }),
-    { name: 'user-storage', skipHydration: true }
+    { name: 'user-storage'}
   )
 )
 
