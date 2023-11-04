@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { IUser } from '@/app/types'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface UserState {
   user: IUser | null
@@ -18,7 +18,7 @@ const useUserStore = create<UserState>()(
         })),
       resetUser: () => set((state) => ({ user: null })),
     }),
-    { name: 'user-storage'}
+    { name: 'user-storage', storage: createJSONStorage(() => sessionStorage) }
   )
 )
 
