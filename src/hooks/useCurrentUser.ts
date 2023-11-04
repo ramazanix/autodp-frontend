@@ -2,9 +2,13 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { AuthTokens, IUser } from '@/app/types'
 import { authService } from '@/services'
+import useUserStore from '@/store/useUserStore'
 
 export const useCurrentUser = () => {
-  const [user, setUser] = useState<IUser | null>(null)
+  // const [user, setUser] = useState<IUser | null>(null)
+  const user = useUserStore((state) => state.user)
+  const setUser = useUserStore((state) => state.setUser)
+  const resetUser = useUserStore((state) => state.resetUser)
   const [tokens, setTokens] = useState<AuthTokens>({
     accessToken: Cookies.get('accessToken'),
     refreshToken: Cookies.get('refreshToken'),
@@ -16,7 +20,7 @@ export const useCurrentUser = () => {
       authService
         .currentUser(tokens.accessToken)
         .then((userData) => {
-          setUser(userData)
+          setUser(userData!)
           setUserIsLoading(false)
         })
         .catch((e) => {
@@ -36,10 +40,12 @@ export const useCurrentUser = () => {
                   })
                 })
                 .catch(() => {
+                  resetUser()
                   Cookies.remove('accessToken')
                   Cookies.remove('refreshToken')
                 })
             } else {
+              resetUser()
               Cookies.remove('accessToken')
               Cookies.remove('refreshToken')
             }
@@ -54,10 +60,12 @@ export const useCurrentUser = () => {
             setTokens({ ...tokens, accessToken: accessToken?.accessToken })
           })
           .catch(() => {
+            resetUser()
             Cookies.remove('accessToken')
             Cookies.remove('refreshToken')
           })
       } else {
+        resetUser()
         setUserIsLoading(false)
         Cookies.remove('accessToken')
         Cookies.remove('refreshToken')
