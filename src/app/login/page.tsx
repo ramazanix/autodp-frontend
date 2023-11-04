@@ -9,7 +9,7 @@ import { useLogin } from '@/hooks/useLogin'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ParseFieldErrors } from '@/utils'
-import useUserStore from '@/store/store'
+import useUserStore from '@/store/useUserStore'
 import { authService } from '@/services'
 
 export default function LoginPage() {

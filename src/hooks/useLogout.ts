@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import { authService } from '@/services'
-import useUserStore from '@/store/store'
+import useUserStore from '@/store/useUserStore'
 
 export const useLogout = () => {
   const resetUser = useUserStore((state) => state.resetUser)
