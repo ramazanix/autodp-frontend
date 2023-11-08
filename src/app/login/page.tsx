@@ -9,11 +9,9 @@ import { useLogin } from '@/hooks/useLogin'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ParseFieldErrors } from '@/utils'
-import useUserStore from '@/store/useUserStore'
 import { authService } from '@/services'
 
 export default function LoginPage() {
-  const setUser = useUserStore((state) => state.setUser)
   const [userData, setUserData] = useState({
     username: '',
     password: '',
@@ -68,9 +66,7 @@ export default function LoginPage() {
       if (authTokens.status === 'success') {
         authService
           .currentUser(authTokens.data.accessToken)
-          .then((userData) => {
-            setUser(userData!)
-          })
+          .then((userData) => {})
         router.push('/')
       } else {
         if (authTokens.statusCode === 401) {
