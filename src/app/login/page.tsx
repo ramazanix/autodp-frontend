@@ -9,6 +9,7 @@ import { useLogin } from '@/hooks/useLogin'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ParseFieldErrors } from '@/utils'
+import { authService } from '@/services'
 
 export default function LoginPage() {
   const [userData, setUserData] = useState({
@@ -63,6 +64,9 @@ export default function LoginPage() {
 
     login(userData).then((authTokens) => {
       if (authTokens.status === 'success') {
+        authService
+          .currentUser(authTokens.data.accessToken)
+          .then((userData) => {})
         router.push('/')
       } else {
         if (authTokens.statusCode === 401) {
