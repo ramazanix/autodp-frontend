@@ -1,14 +1,9 @@
 'use client'
 
-import { Header } from '@/components/header'
-import { useCurrentUser } from '@/hooks/useCurrentUser'
+import { useContext } from 'react'
+import { UserContext } from '@/context'
 
 export default function Home() {
-  const { user, userIsLoading } = useCurrentUser()
-  return (
-    <>
-      <Header user={user!} userIsLoading={userIsLoading} />
-      {!userIsLoading && user ? user.username : 'Not Authorized'}
-    </>
-  )
+  const { user, userIsLoading } = useContext(UserContext)
+  return <>{!userIsLoading && user ? user.username : 'Not Authorized'}</>
 }
