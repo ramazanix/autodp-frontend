@@ -7,7 +7,7 @@ import { UsersList } from '@/components/usersList'
 import { SearchBar } from '@/components/searchBar'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 
-export default function UsersPage(searchInput: string) {
+export default function UsersPage() {
   const { user, userIsLoading } = useCurrentUser()
   const limit = 10
   const { usersList } = useUsers({ limit })
