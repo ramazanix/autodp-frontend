@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+import { IUser } from '@/app/types'
 
 export class AuthService {
   protected readonly instance: AxiosInstance
@@ -37,7 +38,7 @@ export class AuthService {
       })
   }
 
-  currentUser = async (accessToken: string) => {
+  currentUser = async (accessToken: string): Promise<IUser | null> => {
     const res = await this.instance.get('/users/me', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -49,8 +50,8 @@ export class AuthService {
         id: res.data.id,
         username: res.data.username,
         role: res.data.role,
-        created_at: res.data.created_at,
-        updated_at: res.data.updated_at,
+        created_at: new Date(res.data.created_at),
+        updated_at: new Date(res.data.updated_at),
       }
     }
     return null
