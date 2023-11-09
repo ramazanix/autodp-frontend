@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+import { IUser } from '@/app/types'
 
 export class UserService {
   protected readonly instance: AxiosInstance
@@ -12,14 +13,33 @@ export class UserService {
     })
   }
 
-  users = async (limit: number | undefined) => {
+  users = async (limit: number | undefined): Promise<IUser[] | null> => {
     const params = { limit: limit }
     const res = await this.instance
       .get('', { params: params })
       .catch((e) => console.log(e))
+
     if (res) {
       return res.data
     }
+
+    return null
+  }
+
+  user = async (username: string): Promise<IUser | null> => {
+    return await this.instance
+      .get(`/${username}`)
+      .then((res) => {
+        return {
+          ...res.data,
+          created_at: new Date(res.data.created_at),
+          updated_at: new Date(res.data.updated_at),
+        }
+      })
+      .catch((e) => {
+        console.log(e.response.data)
+        return null
+      })
   }
 
   create = async (username: string, password: string) => {
