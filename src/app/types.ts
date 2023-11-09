@@ -9,8 +9,8 @@ export interface IUser {
   id: UUID
   username: string
   role: IRole
-  created_at: string
-  updated_at: string
+  created_at: Date
+  updated_at: Date
 }
 
 export interface IAuthTokens {
