@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import { IUser } from '@/app/types'
+import { parseDate } from '@/utils'
 
 export class UserService {
   protected readonly instance: AxiosInstance
@@ -30,14 +31,16 @@ export class UserService {
     return await this.instance
       .get(`/${username}`)
       .then((res) => {
+        let created_at = parseDate(res.data.created_at)
+        let updated_at = parseDate(res.data.updated_at)
         return {
           ...res.data,
-          created_at: new Date(res.data.created_at),
-          updated_at: new Date(res.data.updated_at),
+          created_at,
+          updated_at,
         }
       })
       .catch((e) => {
-        console.log(e.response.data)
+        console.log(e)
         return null
       })
   }
