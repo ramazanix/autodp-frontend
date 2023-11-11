@@ -9,8 +9,10 @@ class UsersClient extends HttpClient {
   }
 
   users = {
-    getAll: (limit?: number) => this.get(`?limit=${limit}`, {parseResponse: true}),
-    get: (username: string) => this.get(`/${username}`, {parseResponse: true}),
+    getAll: (limit?: number) =>
+      this.get(`?limit=${limit}`, { parseResponse: true }),
+    get: (username: string) =>
+      this.get(`/${username}`, { parseResponse: true }),
   }
 }
 
