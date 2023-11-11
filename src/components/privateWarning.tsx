@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 
 export const PrivateWarning: React.FC = () => {
-  const router = useRouter()пые
+  const router = useRouter()
   const pathname = usePathname()
   const handleRedirect = () => {
     router.refresh()
