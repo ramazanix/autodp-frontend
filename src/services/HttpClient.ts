@@ -22,7 +22,6 @@ class HttpClient {
     const res = await fetch(this._baseURL + endpoint, {
       ...options,
       headers: this._headers,
-      cache: 'no-cache'
     })
 
     if (!res.ok) throw new Error(res.statusText)
