@@ -6,7 +6,6 @@ export const PrivateWarning: React.FC = () => {
   const router = useRouter()
   const pathname = usePathname()
   const handleRedirect = () => {
-    router.refresh()
     router.replace(`/login?backRef=${pathname}`)
   }
   return (
