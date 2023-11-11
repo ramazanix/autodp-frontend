@@ -10,8 +10,8 @@ export const useUsers = (props: Props) => {
   const [usersList, setUsersList] = useState<IUser[] | null>([])
   const { limit } = props
   useEffect(() => {
-    usersService
-      .users(limit)
+    usersService.users
+      .getAll(limit)
       .then((users) => setUsersList(users))
       .catch((e) => console.log(e))
   }, [limit])
