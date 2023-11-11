@@ -1,4 +1,4 @@
-import { HTTP_METHOD } from 'next/dist/server/web/http'
+import { Headers } from 'next/dist/compiled/@edge-runtime/primitives'
 
 interface IClientOptions {
   baseURL: string
@@ -7,22 +7,22 @@ interface IClientOptions {
 
 interface IFetchOptions extends RequestInit {
   parseResponse: boolean
-  method: HTTP_METHOD
 }
 
 class HttpClient {
-  protected _headers: any
-  protected _baseURL: any
+  protected _baseURL: string
+  protected _headers: Headers
 
   public constructor(options: IClientOptions) {
     this._baseURL = options.baseURL || ''
     this._headers = options.headers || {}
   }
 
-  _fetchJson = async (endpoint: string, options: IFetchOptions) => {
+  async _fetchJson(endpoint: string, options: IFetchOptions) {
     const res = await fetch(this._baseURL + endpoint, {
       ...options,
       headers: this._headers,
+      cache: 'no-cache'
     })
 
     if (!res.ok) throw new Error(res.statusText)
@@ -33,16 +33,16 @@ class HttpClient {
   }
 
   setHeader(key: string, value: string) {
-    this._headers[key] = value
+    this._headers.set(key, value)
     return this
   }
 
   getHeader(key: string) {
-    return this._headers[key]
+    return this._headers.get(key)
   }
 
   setBearerAuth(token: string) {
-    this._headers.Authorization = `Bearer ${token}`
+    this._headers.set('Authorization', `Bearer ${token}`)
     return this
   }
 
