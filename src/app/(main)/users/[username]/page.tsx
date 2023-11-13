@@ -11,9 +11,7 @@ export default async function UserPage({
   const accessToken = cookies().get('accessToken')?.value
 
   if (accessToken) {
-    const userInfo = await usersService
-      .setBearerAuth(accessToken)
-      .users.get(params.username)
+    const userInfo = await usersService.users.get(params.username, accessToken)
 
     return <>{<UserProfile userInfo={userInfo!} />}</>
   } else return <PrivateWarning />
