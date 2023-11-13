@@ -24,7 +24,10 @@ class HttpClient {
       headers: this._headers,
     })
 
-    if (!res.ok) throw new Error(res.statusText)
+    if (!res.ok) {
+      let data = await res.json()
+      throw { status: res.status, data }
+    }
 
     if (options.parseResponse && res.status != 204) return res.json()
 
