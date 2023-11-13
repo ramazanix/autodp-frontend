@@ -6,7 +6,9 @@ class UsersClient extends HttpClient {
   constructor(baseURL: string) {
     super({
       baseURL,
-      headers: new Headers(),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
     })
   }
 
@@ -38,11 +40,10 @@ class UsersClient extends HttpClient {
         })
 
         .catch((e) => {
-          console.log(e, 123)
           return {
             status: 'failed',
-            statusCode: e.response.status,
-            data: e.response.data.detail,
+            statusCode: e.status,
+            data: e.data.detail,
           }
         }),
   }
