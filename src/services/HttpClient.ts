@@ -52,7 +52,7 @@ class HttpClient {
     })
   }
 
-  post(endpoint: string, body: Body, options: IFetchOptions) {
+  post(endpoint: string, body: Object, options: IFetchOptions) {
     return this._fetchJson(endpoint, {
       ...options,
       body: body ? JSON.stringify(body) : undefined,
