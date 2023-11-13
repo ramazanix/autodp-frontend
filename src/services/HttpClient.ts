@@ -45,7 +45,7 @@ class HttpClient {
     return this
   }
 
-  get(endpoint: string, options: IFetchOptions) {
+  get(endpoint: string, options: IFetchOptions): Promise<any> {
     return this._fetchJson(endpoint, {
       ...options,
       method: 'GET',
