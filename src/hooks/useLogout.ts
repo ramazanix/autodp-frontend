@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie'
 import { authService } from '@/services'
+import { useRouter } from 'next/navigation'
 
 export const useLogout = () => {
+  const router = useRouter()
   const logout = async () => {
     const accessToken = Cookies.get('accessToken')
     const refreshToken = Cookies.get('refreshToken')
@@ -10,6 +12,7 @@ export const useLogout = () => {
       await authService.revokeRefreshToken(refreshToken)
       Cookies.remove('accessToken')
       Cookies.remove('refreshToken')
+      router.refresh()
     }
   }
 
