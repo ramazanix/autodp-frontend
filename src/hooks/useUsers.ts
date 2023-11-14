@@ -12,7 +12,7 @@ export const useUsers = (props: Props) => {
   useEffect(() => {
     usersService.users
       .getAll(limit)
-      .then((users) => setUsersList(users))
+      .then((res) => setUsersList(res.data))
       .catch((e) => console.log(e))
   }, [limit])
 
