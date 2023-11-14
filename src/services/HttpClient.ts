@@ -23,15 +23,11 @@ class HttpClient {
       ...options,
       headers: this._headers,
     })
+    let data = await res.json()
 
-    if (!res.ok) {
-      let data = await res.json()
-      throw { status: res.status, data }
-    }
+    if (!res.ok) throw { status: res.status, data }
 
-    if (options.parseResponse && res.status != 204) return res.json()
-
-    return undefined
+    return { status: res.status, data }
   }
 
   setHeader(key: string, value: string) {
