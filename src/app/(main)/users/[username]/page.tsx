@@ -12,7 +12,8 @@ export default async function UserPage({
 
   if (accessToken) {
     const userInfo = await usersService.users.get(params.username, accessToken)
+    return <UserProfile userInfo={userInfo} />
+  }
 
-    return <>{<UserProfile userInfo={userInfo!} />}</>
-  } else return <PrivateWarning />
+  return <PrivateWarning />
 }
