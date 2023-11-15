@@ -10,7 +10,7 @@ interface Props {
 export const useLogin = () => {
   const login = async (props: Props) => {
     const { username, password, rememberMe } = props
-    const tokens = await authService.login(username, password)
+    const tokens = await authService.auth.login(username, password)
     const accessExpires = 1 / 48
     const refreshExpires = 15
     if (tokens.status === 'success') {

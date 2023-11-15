@@ -13,20 +13,20 @@ export const useCurrentUser = () => {
 
   useEffect(() => {
     if (tokens.accessToken) {
-      authService
+      authService.auth
         .currentUser(tokens.accessToken)
         .then((userData) => {
           setUser(userData!)
           setUserIsLoading(false)
         })
         .catch((e) => {
-          if (e.response.status === 422 || e.response.status === 401) {
-            authService
+          if (e.status === 422 || e.status === 401) {
+            authService.auth
               .revokeAccessToken(tokens.accessToken!)
               .catch((e) => console.log(e))
 
             if (tokens.refreshToken) {
-              authService
+              authService.auth
                 .refreshAccessToken(tokens.refreshToken)
                 .then((accessToken) => {
                   Cookies.set('accessToken', accessToken?.accessToken)
@@ -47,7 +47,7 @@ export const useCurrentUser = () => {
         })
     } else {
       if (tokens.refreshToken) {
-        authService
+        authService.auth
           .refreshAccessToken(tokens.refreshToken)
           .then((accessToken) => {
             Cookies.set('accessToken', accessToken?.accessToken)
