@@ -1,5 +1,4 @@
 import { IUser } from '@/app/types'
-import React from 'react'
 
 interface Prop {
   userInfo: IUser
