@@ -32,6 +32,11 @@ class HttpClient {
         headers: this._headers,
       }
     )
+
+    if (!options.parseResponse) {
+      return null
+    }
+
     let data = await res.json()
 
     if (!res.ok) throw { status: res.status, data }
