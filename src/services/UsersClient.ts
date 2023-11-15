@@ -14,11 +14,11 @@ class UsersClient extends HttpClient {
 
   users = {
     getAll: (limit?: number): Promise<{ status: number; data: IUser[] }> =>
-      this.get(limit ? `?limit=${limit}` : '', { parseResponse: true }),
+      this.get(limit ? `?limit=${limit}` : ''),
 
     get: (username: string, accessToken: string): Promise<IUser> =>
       this.setBearerAuth(accessToken)
-        .get(`/${username}`, { parseResponse: true })
+        .get(`/${username}`)
         .then((res) => {
           let created_at = parseDate(res.data.created_at)
           let updated_at = parseDate(res.data.updated_at)
@@ -31,7 +31,7 @@ class UsersClient extends HttpClient {
         }),
 
     create: (username: string, password: string) =>
-      this.post('', { username, password }, { parseResponse: true })
+      this.post('', { username, password })
         .then((res) => {
           return {
             status: 'success',
