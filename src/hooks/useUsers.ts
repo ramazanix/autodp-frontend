@@ -7,12 +7,12 @@ interface Props {
 }
 
 export const useUsers = (props: Props) => {
-  const [usersList, setUsersList] = useState<IUser[] | []>([])
+  const [usersList, setUsersList] = useState<IUser[] | null>([])
   const { limit } = props
   useEffect(() => {
-    usersService
-      .users(limit)
-      .then((users) => setUsersList(users))
+    usersService.users
+      .getAll(limit)
+      .then((res) => setUsersList(res.data))
       .catch((e) => console.log(e))
   }, [limit])
 

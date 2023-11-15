@@ -43,7 +43,7 @@ export default function RegisterPage() {
     })
   }
 
-  const handleRegister = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     setErrors({
@@ -51,22 +51,24 @@ export default function RegisterPage() {
       form: '',
     })
 
-    usersService.create(userData.username, userData.password).then((res) => {
-      if (res.status === 'success') {
-        router.push('/login')
-      } else {
-        if (res.statusCode === 400) {
-          setErrors({
-            ...errors,
-            form: res.data,
-          })
-        } else if (res.statusCode === 422) {
-          let parsedErrors = ParseFieldErrors(res.data)
-          // @ts-ignore
-          setErrors(parsedErrors)
+    await usersService.users
+      .create(userData.username, userData.password)
+      .then((res) => {
+        if (res.status === 'success') {
+          router.push('/login')
+        } else {
+          if (res.statusCode === 400) {
+            setErrors({
+              ...errors,
+              form: res.data,
+            })
+          } else if (res.statusCode === 422) {
+            let parsedErrors = ParseFieldErrors(res.data)
+            // @ts-ignore
+            setErrors(parsedErrors)
+          }
         }
-      }
-    })
+      })
   }
 
   return (

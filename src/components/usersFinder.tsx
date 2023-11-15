@@ -1,16 +1,15 @@
 'use client'
 
-import { Header } from '@/components/header'
-import { useUsers } from '@/hooks/useUsers'
 import React, { useState } from 'react'
-import { UsersList } from '@/components/usersList'
 import { SearchBar } from '@/components/searchBar'
-import { useCurrentUser } from '@/hooks/useCurrentUser'
+import { UsersList } from '@/components/usersList'
+import { IUser } from '@/app/types'
 
-export default function UsersPage(searchInput: string) {
-  const { user, userIsLoading } = useCurrentUser()
-  const limit = 10
-  const { usersList } = useUsers({ limit })
+interface Props {
+  usersList: IUser[] | null
+}
+
+export const UsersFinder: React.FC<Props> = ({ usersList }) => {
   const [inputText, setInputText] = useState('')
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     let lowerCase = e.target.value.toLowerCase()
@@ -19,7 +18,6 @@ export default function UsersPage(searchInput: string) {
 
   return (
     <>
-      <Header user={user} userIsLoading={userIsLoading} />
       <SearchBar
         id={'users-filter'}
         name={'users-filter'}

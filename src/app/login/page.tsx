@@ -7,10 +7,11 @@ import { CustomCheckbox } from '@/components/customCheckbox'
 import { CustomButton } from '@/components/customButton'
 import { useLogin } from '@/hooks/useLogin'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ParseFieldErrors } from '@/utils'
 
 export default function LoginPage() {
+  const backRef = useSearchParams().get('backRef')
   const [userData, setUserData] = useState({
     username: '',
     password: '',
@@ -63,7 +64,12 @@ export default function LoginPage() {
 
     login(userData).then((authTokens) => {
       if (authTokens.status === 'success') {
-        router.push('/')
+        if (backRef) {
+          router.replace(backRef)
+        } else {
+          router.replace('/')
+        }
+        router.refresh()
       } else {
         if (authTokens.statusCode === 401) {
           setErrors({
