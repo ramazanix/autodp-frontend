@@ -35,7 +35,7 @@ class UsersClient extends HttpClient {
         .then((res) => {
           return {
             status: 'success',
-            statusCode: res.status,
+            statusCode: res!.status,
             data: [],
           }
         })
