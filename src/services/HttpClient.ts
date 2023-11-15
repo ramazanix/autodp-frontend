@@ -6,7 +6,8 @@ interface IClientOptions {
 }
 
 interface IFetchOptions extends RequestInit {
-  parseResponse: boolean
+  parseResponse?: boolean
+  notRelated?: boolean
 }
 
 class HttpClient {
@@ -19,10 +20,18 @@ class HttpClient {
   }
 
   async _fetchJson(endpoint: string, options: IFetchOptions) {
-    const res = await fetch(this._baseURL + endpoint, {
-      ...options,
-      headers: this._headers,
-    })
+    options.parseResponse = options?.parseResponse ?? true
+    options.notRelated = options.notRelated ?? false
+
+    const res = await fetch(
+      options.notRelated
+        ? this._baseURL.split('/').slice(0, 3).join('/') + endpoint
+        : this._baseURL + endpoint,
+      {
+        ...options,
+        headers: this._headers,
+      }
+    )
     let data = await res.json()
 
     if (!res.ok) throw { status: res.status, data }
@@ -44,14 +53,14 @@ class HttpClient {
     return this
   }
 
-  get(endpoint: string, options: IFetchOptions): Promise<any> {
+  get(endpoint: string, options?: IFetchOptions): Promise<any> {
     return this._fetchJson(endpoint, {
       ...options,
       method: 'GET',
     })
   }
 
-  post(endpoint: string, body: Object, options: IFetchOptions) {
+  post(endpoint: string, body: Object, options?: IFetchOptions) {
     return this._fetchJson(endpoint, {
       ...options,
       body: body ? JSON.stringify(body) : undefined,
@@ -59,7 +68,7 @@ class HttpClient {
     })
   }
 
-  put(endpoint: string, body: Body, options: IFetchOptions) {
+  put(endpoint: string, body: Body, options?: IFetchOptions) {
     return this._fetchJson(endpoint, {
       ...options,
       body: body ? JSON.stringify(body) : undefined,
@@ -67,7 +76,7 @@ class HttpClient {
     })
   }
 
-  patch(endpoint: string, operations: any, options: IFetchOptions) {
+  patch(endpoint: string, operations: any, options?: IFetchOptions) {
     return this._fetchJson(endpoint, {
       ...options,
       parseResponse: false,
@@ -76,7 +85,7 @@ class HttpClient {
     })
   }
 
-  delete(endpoint: string, options: IFetchOptions) {
+  delete(endpoint: string, options?: IFetchOptions) {
     return this._fetchJson(endpoint, {
       ...options,
       parseResponse: false,
