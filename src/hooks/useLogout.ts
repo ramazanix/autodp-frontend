@@ -8,8 +8,8 @@ export const useLogout = () => {
     const accessToken = Cookies.get('accessToken')
     const refreshToken = Cookies.get('refreshToken')
     if (accessToken && refreshToken) {
-      await authService.revokeAccessToken(accessToken)
-      await authService.revokeRefreshToken(refreshToken)
+      await authService.auth.revokeAccessToken(accessToken)
+      await authService.auth.revokeRefreshToken(refreshToken)
       Cookies.remove('accessToken')
       Cookies.remove('refreshToken')
       router.refresh()
