@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { AuthTokens, IUser } from '@/app/types'
 import { authService } from '@/services'
+import { useRouter } from 'next/navigation'
 
 export const useCurrentUser = () => {
   const [user, setUser] = useState<IUser | null>(null)
@@ -9,6 +10,7 @@ export const useCurrentUser = () => {
     accessToken: Cookies.get('accessToken'),
     refreshToken: Cookies.get('refreshToken'),
   })
+  const router = useRouter()
   const [userIsLoading, setUserIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -34,14 +36,17 @@ export const useCurrentUser = () => {
                     ...tokens,
                     accessToken: accessToken?.accessToken,
                   })
+                  router.refresh()
                 })
                 .catch(() => {
                   Cookies.remove('accessToken')
                   Cookies.remove('refreshToken')
+                  router.refresh()
                 })
             } else {
               Cookies.remove('accessToken')
               Cookies.remove('refreshToken')
+              router.refresh()
             }
           }
         })
@@ -52,15 +57,18 @@ export const useCurrentUser = () => {
           .then((accessToken) => {
             Cookies.set('accessToken', accessToken?.accessToken)
             setTokens({ ...tokens, accessToken: accessToken?.accessToken })
+            router.refresh()
           })
           .catch(() => {
             Cookies.remove('accessToken')
             Cookies.remove('refreshToken')
+            router.refresh()
           })
       } else {
         setUserIsLoading(false)
         Cookies.remove('accessToken')
         Cookies.remove('refreshToken')
+        router.refresh()
       }
     }
   }, [tokens])
