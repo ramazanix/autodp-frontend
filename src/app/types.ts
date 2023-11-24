@@ -5,12 +5,19 @@ export interface IRole {
   description: string
 }
 
+interface IAvatar {
+  name: string
+  size: number
+  location: string
+}
+
 export interface IUser {
   id: UUID
   username: string
   role: IRole
   created_at: Date
   updated_at: Date
+  avatar: IAvatar
 }
 
 export interface IAuthTokens {
