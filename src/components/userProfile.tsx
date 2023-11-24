@@ -15,6 +15,7 @@ export const UserProfile: React.FC<Prop> = ({ userInfo }) => {
         width={0}
         height={0}
         sizes="100vw"
+        priority
       />
 
       <div className="row-span-2 flex items-center justify-center text-5xl">
