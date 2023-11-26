@@ -4,9 +4,6 @@ class AuthClient extends HttpClient {
   constructor(baseURL: string) {
     super({
       baseURL: baseURL,
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
     })
   }
 
