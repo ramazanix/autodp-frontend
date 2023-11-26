@@ -1,8 +1,6 @@
-import { Headers } from 'next/dist/compiled/@edge-runtime/primitives'
-
 interface IClientOptions {
   baseURL: string
-  headers: Headers
+  headers?: Headers
 }
 
 interface IFetchOptions extends RequestInit {
@@ -16,7 +14,8 @@ class HttpClient {
 
   public constructor(options: IClientOptions) {
     this._baseURL = options.baseURL || ''
-    this._headers = options.headers || {}
+    this._headers =
+      options.headers || new Headers({ 'Content-Type': 'application/json' })
   }
 
   async _fetchJson(endpoint: string, options: IFetchOptions) {
@@ -28,8 +27,8 @@ class HttpClient {
         ? this._baseURL.split('/').slice(0, 3).join('/') + endpoint
         : this._baseURL + endpoint,
       {
-        ...options,
         headers: this._headers,
+        ...options,
       }
     )
 
@@ -65,10 +64,10 @@ class HttpClient {
     })
   }
 
-  post(endpoint: string, body: Object, options?: IFetchOptions) {
+  post(endpoint: string, body: Object | FormData, options?: IFetchOptions) {
     return this._fetchJson(endpoint, {
       ...options,
-      body: body ? JSON.stringify(body) : undefined,
+      body: body instanceof FormData ? body : JSON.stringify(body),
       method: 'POST',
     })
   }
