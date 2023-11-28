@@ -11,11 +11,15 @@ interface Prop {
 
 export const UserProfile: React.FC<Prop> = ({ userInfo }) => {
   const [isLoading, setIsLoading] = useState(true)
-  const [imageShown, setImageShown] = useState(true)
-  const imageRef = useRef<HTMLImageElement>(null)
+  const [showText, setShowText] = useState(false)
+  // const textRef = useRef<HTMLImageElement>(null)
 
   const onImageHover = () => {
-    console.log(123)
+    setShowText(true)
+  }
+
+  const onImageUnHover = () => {
+    setShowText(false)
   }
 
   return (
@@ -25,12 +29,25 @@ export const UserProfile: React.FC<Prop> = ({ userInfo }) => {
         className={
           isLoading
             ? 'hidden'
-            : 'max-h-15 mx-auto my-6 grid w-1/2 grid-cols-2 grid-rows-4 rounded-2xl bg-[#273043]/50 shadow'
+            : 'max-h-15 relative mx-auto my-6 grid w-1/2 grid-cols-2 grid-rows-4 rounded-2xl bg-[#273043]/50 shadow'
         }
       >
+        <div
+          className={
+            showText
+              ? 'pointer-events-none absolute z-10 my-auto ml-32 mt-44 bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-xl font-black text-transparent'
+              : 'hidden'
+          }
+        >
+          Change Avatar
+        </div>
+
         <Image
-          ref={imageRef}
-          className="row-span-4 h-full w-full rounded-full p-10"
+          className={
+            showText
+              ? 'row-span-4 h-full w-full rounded-full p-10 opacity-50 transition-opacity duration-500'
+              : 'row-span-4 h-full w-full rounded-full p-10 duration-500'
+          }
           src={process.env.NEXT_PUBLIC_API_URL + userInfo.avatar.location}
           alt="User avatar"
           width={0}
@@ -40,7 +57,8 @@ export const UserProfile: React.FC<Prop> = ({ userInfo }) => {
           onLoad={() => {
             setIsLoading(!isLoading)
           }}
-          onMouseOver={onImageHover}
+          onMouseEnter={onImageHover}
+          onMouseLeave={onImageUnHover}
         />
 
         <div className="row-span-2 flex items-center justify-center text-5xl">
