@@ -37,11 +37,12 @@ const ImageCropper: React.FC<Props> = ({ image, onCropDone, onCropCancel }) => {
             'flex mx-auto my-[2em] max-w-[25vw] w-full h-[70%] rounded-2xl bg-black',
         }}
       />
-      <div className="relative mt-[65vh] flex gap-x-8">
+      <div className="mt-[65vh] grid grid-cols-2 gap-x-8">
         <CustomButton
           onClick={onCropCancel}
           text="Cancel"
           bgColor="red"
+          className="text-lg"
           type_="button"
         />
 
@@ -51,6 +52,7 @@ const ImageCropper: React.FC<Props> = ({ image, onCropDone, onCropCancel }) => {
           }}
           bgColor="green"
           text="Done"
+          className="text-lg"
           type_="button"
         />
       </div>
