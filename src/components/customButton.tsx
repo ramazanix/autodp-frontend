@@ -1,4 +1,5 @@
 import React from 'react'
+import { twMerge, twJoin } from 'tailwind-merge'
 
 enum BackgroundColorsStyles {
   red = 'bg-red-300/70 hover:bg-red-300 focus:ring-red-300',
@@ -12,6 +13,7 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   type_: 'submit' | 'button' | 'reset'
   onClick: React.MouseEventHandler
   bgColor?: keyof typeof BackgroundColorsStyles
+  className?: string
 }
 
 export const CustomButton: React.FC<ButtonProps> = ({
@@ -19,12 +21,19 @@ export const CustomButton: React.FC<ButtonProps> = ({
   bgColor = 'blue',
   type_,
   onClick,
+  className,
 }) => {
   return (
     <>
       <button
         type={type_}
-        className={`w-full rounded-lg px-5 py-2.5 text-sm font-medium text-gray-900/70 duration-200 focus:outline-none focus:ring-2 ${BackgroundColorsStyles[bgColor]}`}
+        className={twJoin(
+          twMerge(
+            'w-full rounded-lg px-5 py-2.5 text-sm font-medium text-gray-900/70 duration-200 focus:outline-none focus:ring-2',
+            `${BackgroundColorsStyles[bgColor]}`
+          ),
+          className
+        )}
         onClick={onClick}
       >
         {text}
