@@ -21,33 +21,23 @@ const ImageCropper: React.FC<Props> = ({ image, onCropDone, onCropCancel }) => {
   }
 
   return (
-    <div className="flex h-full w-full items-end justify-center overflow-hidden">
-      <div>
-        <Cropper
-          image={image}
-          aspect={1}
-          crop={crop}
-          zoom={zoom}
-          cropShape="round"
-          showGrid={false}
-          onCropChange={setCrop}
-          onZoomChange={setZoom}
-          onCropComplete={onCropComplete}
-          style={{
-            containerStyle: {
-              width: '60%',
-              height: '75%',
-              backgroundColor: '#637da6',
-              marginRight: 'auto',
-              marginLeft: 'auto',
-              borderRadius: '.5rem',
-              marginTop: '4rem',
-            },
-          }}
-        />
-      </div>
-
-      <div className="flex gap-x-8 pb-10">
+    <div className="flex h-fit w-fit flex-col items-center justify-center overflow-hidden">
+      <Cropper
+        image={image}
+        aspect={1}
+        crop={crop}
+        zoom={zoom}
+        cropShape="round"
+        showGrid={false}
+        onCropChange={setCrop}
+        onZoomChange={setZoom}
+        onCropComplete={onCropComplete}
+        classes={{
+          containerClassName:
+            'flex mx-auto my-[2em] max-w-[25vw] w-full h-[70%] rounded-2xl bg-black',
+        }}
+      />
+      <div className="relative mt-[65vh] flex gap-x-8">
         <CustomButton
           onClick={onCropCancel}
           text="Cancel"
