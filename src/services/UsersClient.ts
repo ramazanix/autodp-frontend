@@ -29,7 +29,8 @@ class UsersClient extends HttpClient {
         }),
 
     create: (username: string, password: string) =>
-      this.post('', { username, password })
+      this.setHeader('Content-Type', 'application/json')
+        .post('', { username, password })
         .then((res) => {
           return {
             status: 'success',
