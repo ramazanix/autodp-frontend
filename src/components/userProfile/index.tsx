@@ -9,9 +9,14 @@ import { AvatarChanger } from '../avatarChanger'
 interface Prop {
   userInfo: IUser
   owner: boolean
+  accessToken: string
 }
 
-export const UserProfile: React.FC<Prop> = ({ userInfo, owner }) => {
+export const UserProfile: React.FC<Prop> = ({
+  userInfo,
+  owner,
+  accessToken,
+}) => {
   const [isLoading, setIsLoading] = useState(true)
   const [showText, setShowText] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -85,6 +90,7 @@ export const UserProfile: React.FC<Prop> = ({ userInfo, owner }) => {
           width={0}
           height={0}
           sizes="100vw"
+          unoptimized
           priority
           onLoad={() => {
             setIsLoading(!isLoading)
@@ -112,7 +118,11 @@ export const UserProfile: React.FC<Prop> = ({ userInfo, owner }) => {
       </div>
       {showModal ? (
         <Modal onModalClose={onModalClose}>
-          <AvatarChanger image={image} onCropCancel={onModalClose} />
+          <AvatarChanger
+            image={image}
+            accessToken={accessToken}
+            onCropCancel={onModalClose}
+          />
         </Modal>
       ) : null}
     </>
