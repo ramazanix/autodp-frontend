@@ -19,6 +19,7 @@ export default async function UserPage({
       <UserProfile
         userInfo={userInfo}
         owner={params.username === parsedJWT.sub}
+        accessToken={accessToken}
       />
     )
   }
