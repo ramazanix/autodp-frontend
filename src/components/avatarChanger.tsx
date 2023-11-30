@@ -1,6 +1,6 @@
 import { Area } from 'react-easy-crop'
 import ImageCropper from './imageCropper'
-import { dataURLtoFile } from '@/utils'
+import { createCroppedImage } from '@/utils'
 import { usersService } from '@/services'
 
 interface Props {
@@ -15,34 +15,10 @@ export const AvatarChanger: React.FC<Props> = ({
   onCropCancel,
 }) => {
   const onCropDone = (imgCroppedArea: Area) => {
-    const canvasEle = document.createElement('canvas')
-    canvasEle.width = imgCroppedArea.width
-    canvasEle.height = imgCroppedArea.height
-
-    const context = canvasEle.getContext('2d')!
-
-    let imageObj1 = new Image()
-    imageObj1.src = image
-
-    imageObj1.onload = function () {
-      context.drawImage(
-        imageObj1,
-        imgCroppedArea.x,
-        imgCroppedArea.y,
-        imgCroppedArea.width,
-        imgCroppedArea.height,
-        0,
-        0,
-        imgCroppedArea.width,
-        imgCroppedArea.height
-      )
-
-      let dataURL = canvasEle.toDataURL('image/jpeg')
-
+    createCroppedImage(image, imgCroppedArea).then((croppedImageFile) => {
       let postBody = new FormData()
-
-      let croppedImageFile = dataURLtoFile(dataURL, 'avatar.jpg')
       postBody.append('file', croppedImageFile)
+
       usersService.users
         .uploadAvatar(postBody, accessToken)
         .then((res) => {
@@ -52,7 +28,7 @@ export const AvatarChanger: React.FC<Props> = ({
         .finally(() => {
           onCropCancel()
         })
-    }
+    })
   }
 
   return (
