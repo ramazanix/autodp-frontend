@@ -6,6 +6,7 @@ import { useRef, useState } from 'react'
 import { UserProfileSkeleton } from './skeleton'
 import { Modal } from '../modal'
 import { AvatarChanger } from '../avatarChanger'
+import { twJoin } from 'tailwind-merge'
 interface Prop {
   userInfo: IUser
   owner: boolean
@@ -69,22 +70,21 @@ export const UserProfile: React.FC<Prop> = ({
               onChange={handleOnImageChange}
             />
             <div
-              className={
-                showText
-                  ? 'pointer-events-none absolute z-10 my-auto ml-32 mt-44 bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-xl font-black text-transparent transition-opacity'
-                  : 'absolute z-10 my-auto ml-32 mt-44 bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-xl font-black text-transparent opacity-0 transition-opacity'
-              }
+              className={twJoin(
+                'absolute z-10 my-auto ml-32 mt-44 bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-xl font-black text-transparent transition-opacity',
+                showText ? 'pointer-events-none' : 'opacity-0'
+              )}
             >
               Change Avatar
             </div>{' '}
           </>
         ) : null}
         <Image
-          className={
-            showText
-              ? 'row-span-4 h-full w-full cursor-pointer rounded-full p-10 opacity-50 transition-opacity duration-300'
-              : 'row-span-4 h-full w-full rounded-full p-10 duration-300'
-          }
+          className={twJoin(
+            'row-span-4 h-full w-full select-none rounded-full p-10 duration-300',
+            showText && 'cursor-pointer opacity-50 transition-opacity'
+          )}
+          draggable={false}
           src={process.env.NEXT_PUBLIC_API_URL + userInfo.avatar.location}
           alt="User avatar"
           width={0}
