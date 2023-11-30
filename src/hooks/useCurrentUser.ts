@@ -71,6 +71,6 @@ export const useCurrentUser = () => {
         router.refresh()
       }
     }
-  }, [tokens])
+  }, [tokens, router])
   return { user, userIsLoading }
 }
