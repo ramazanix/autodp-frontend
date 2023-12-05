@@ -4,9 +4,6 @@ class AuthClient extends HttpClient {
   constructor(baseURL: string) {
     super({
       baseURL: baseURL,
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
     })
   }
 
@@ -41,6 +38,7 @@ class AuthClient extends HttpClient {
             role: res.data.role,
             created_at: new Date(res.data.created_at),
             updated_at: new Date(res.data.updated_at),
+            avatar: res.data.avatar,
           }
         }),
 

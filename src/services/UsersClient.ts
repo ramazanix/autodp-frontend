@@ -6,9 +6,7 @@ class UsersClient extends HttpClient {
   constructor(baseURL: string) {
     super({
       baseURL,
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
+      headers: new Headers(),
     })
   }
 
@@ -31,7 +29,8 @@ class UsersClient extends HttpClient {
         }),
 
     create: (username: string, password: string) =>
-      this.post('', { username, password })
+      this.setHeader('Content-Type', 'application/json')
+        .post('', { username, password })
         .then((res) => {
           return {
             status: 'success',
@@ -39,7 +38,24 @@ class UsersClient extends HttpClient {
             data: [],
           }
         })
+        .catch((e) => {
+          return {
+            status: 'failed',
+            statusCode: e.status,
+            data: e.data.detail,
+          }
+        }),
 
+    uploadAvatar: (avatar: FormData, accessToken: string) =>
+      this.setBearerAuth(accessToken)
+        .post('/me/upload_avatar', avatar)
+        .then((res) => {
+          return {
+            status: 'success',
+            statusCode: res!.status,
+            data: [],
+          }
+        })
         .catch((e) => {
           return {
             status: 'failed',
