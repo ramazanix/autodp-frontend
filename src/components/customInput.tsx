@@ -1,12 +1,22 @@
-import React from 'react'
+import { HTMLInputTypeAttribute } from 'react'
+import { twJoin } from 'tailwind-merge'
+
+enum BackgroundColorsStyles {
+  red = 'focus:border-amber-50 focus:ring-red-300/90',
+  yellow = 'focus:border-yellow-50 focus:ring-yellow-300/90',
+  green = 'focus:border-emerald-50 focus:ring-emerald-300/90',
+  blue = 'focus:border-blue-50 focus:ring-blue-300/90',
+}
 
 interface Props {
   id: string
   text: string
-  inputType: string
-  placeholder: string
-  required: boolean
+  textColor?: string
+  inputType: HTMLInputTypeAttribute
+  placeholder?: string
+  required?: boolean
   value: string
+  color?: keyof typeof BackgroundColorsStyles
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   name?: string
   minLength?: number
@@ -16,12 +26,14 @@ interface Props {
 export const CustomInput: React.FC<Props> = ({
   id,
   text,
+  textColor = 'text-gray-900',
   inputType,
   placeholder,
-  required,
+  required = false,
   value,
+  color = 'blue',
   handleChange,
-  name,
+  name = id,
   minLength,
   maxLength,
 }) => {
@@ -29,20 +41,22 @@ export const CustomInput: React.FC<Props> = ({
     <div>
       <label
         htmlFor={id}
-        className={
-          'text-l mb-2 block font-medium text-gray-900 ' +
-          (required
-            ? "after:ml-0.5 after:text-red-400 after:content-['*']"
-            : '')
-        }
+        className={twJoin(
+          'text-l mb-2 block font-medium',
+          textColor,
+          required && "after:ml-0.5 after:text-red-400 after:content-['*']"
+        )}
       >
         {text}
       </label>
       <input
         type={inputType}
         id={id}
-        name={name ? name : id}
-        className="box-shadow block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-[inset_0_0_0px_1000px_rgb(249,250,251)] duration-300 selection:bg-blue-200 focus:border-amber-50 focus:outline-none focus:ring focus:ring-red-300/90"
+        name={name}
+        className={twJoin(
+          'box-shadow block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-[inset_0_0_0px_1000px_rgb(249,250,251)] duration-300 focus:outline-none focus:ring',
+          BackgroundColorsStyles[color]
+        )}
         placeholder={placeholder}
         required={required}
         value={value}
