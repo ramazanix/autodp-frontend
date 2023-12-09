@@ -1,5 +1,5 @@
 import React from 'react'
-import { twMerge, twJoin } from 'tailwind-merge'
+import { twMerge } from 'tailwind-merge'
 
 enum BackgroundColorsStyles {
   red = 'bg-red-300/70 hover:bg-red-300 focus:ring-red-300',
