@@ -17,6 +17,7 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 }
 
 export const CustomButton: React.FC<ButtonProps> = ({
+  disabled,
   text,
   bgColor = 'blue',
   type_,
@@ -26,12 +27,11 @@ export const CustomButton: React.FC<ButtonProps> = ({
   return (
     <>
       <button
+        disabled={disabled}
         type={type_}
-        className={twJoin(
-          twMerge(
-            'w-full rounded-lg px-5 py-2.5 text-sm font-medium text-gray-900/70 duration-200 focus:outline-none focus:ring-2',
-            `${BackgroundColorsStyles[bgColor]}`
-          ),
+        className={twMerge(
+          'w-full rounded-lg px-5 py-2.5 text-sm font-medium text-gray-900/70 duration-200 focus:outline-none focus:ring-2',
+          `${BackgroundColorsStyles[bgColor]}`,
           className
         )}
         onClick={onClick}
