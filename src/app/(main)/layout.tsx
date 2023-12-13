@@ -1,4 +1,5 @@
 'use client'
+
 import { Header } from '@/components/header'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { UserContext } from '@/context'
