@@ -5,12 +5,18 @@ import { UserProfileBox } from '../userProfileBox'
 import { CustomInput } from '../customInput'
 import { useState } from 'react'
 import { CustomButton } from '../customButton'
+import { usersService } from '@/services'
+import { useRouter } from 'next/navigation'
+import { useContext } from 'react'
+import { UserContext } from '@/context'
 
 interface Props {
   userInfo: IUser
   accessToken: string
 }
 export const UserSettings: React.FC<Props> = ({ userInfo, accessToken }) => {
+  const { setUser } = useContext(UserContext)
+  const router = useRouter()
   const [userCredentials, setUserCredentials] = useState({
     username: userInfo.username,
     password: '',
@@ -18,7 +24,23 @@ export const UserSettings: React.FC<Props> = ({ userInfo, accessToken }) => {
   })
 
   const handleUpdate = () => {
-    console.log(123)
+    let payloadData = {
+      username:
+        userCredentials.username !== userInfo.username &&
+        userCredentials.username.length >= 2
+          ? userCredentials.username
+          : undefined,
+      password:
+        userCredentials.password.length >= 8
+          ? userCredentials.password
+          : undefined,
+    }
+    usersService.users.update(payloadData, accessToken).then((res) => {
+      setUser(res.data)
+
+      userCredentials.username !== res.data.username &&
+        router.replace(`/users/${res.data.username}/settings`)
+    })
   }
 
   return (
@@ -86,7 +108,8 @@ export const UserSettings: React.FC<Props> = ({ userInfo, accessToken }) => {
           <CustomButton
             disabled={
               userCredentials.password !== userCredentials.passwordAgain ||
-              userCredentials.username.length < 2
+              (userCredentials.username === userInfo.username &&
+                userCredentials.password.length === 0)
             }
             className="mb-3 w-24 rounded-xl"
             text="Update"
