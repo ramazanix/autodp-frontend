@@ -72,5 +72,5 @@ export const useCurrentUser = () => {
       }
     }
   }, [tokens, router])
-  return { user, userIsLoading }
+  return { user, setUser, userIsLoading }
 }
