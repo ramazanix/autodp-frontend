@@ -1,33 +1,32 @@
 'use client'
 
 import { IUser } from '@/app/types'
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { UserProfileSkeleton } from './skeleton'
 import { Modal } from '../modal'
 import { AvatarChanger } from '../avatarChanger'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { UserProfileBox } from '../userProfileBox'
 import { UserAvatarChangeArea } from '../userAvatarChangeArea'
 import { UserAvatar } from '../userAvatar'
 import { UserInformation } from './userInfo'
+import { UserContext } from '@/context'
 
 interface Prop {
   userInfo: IUser
-  owner: boolean
   accessToken: string
 }
 
-export const UserProfile: React.FC<Prop> = ({
-  userInfo,
-  owner,
-  accessToken,
-}) => {
+export const UserProfile: React.FC<Prop> = ({ userInfo, accessToken }) => {
   const router = useRouter()
+  const params = useParams()
+  const { user } = useContext(UserContext)
   const [isLoading, setIsLoading] = useState(true)
   const [showText, setShowText] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [image, setImage] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const owner = params.username == user?.username
 
   const onModalClose = () => {
     setShowModal(false)
