@@ -9,9 +9,9 @@ export default function MainTemplate({
 }: {
   children: React.ReactNode
 }) {
-  const { user, userIsLoading } = useCurrentUser()
+  const { user, setUser, userIsLoading } = useCurrentUser()
   return (
-    <UserContext.Provider value={{ user, userIsLoading }}>
+    <UserContext.Provider value={{ user, setUser, userIsLoading }}>
       <Header user={user} userIsLoading={userIsLoading} />
       {children}
     </UserContext.Provider>
