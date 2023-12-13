@@ -46,6 +46,25 @@ class UsersClient extends HttpClient {
           }
         }),
 
+    update: (payloadData: {}, accessToken: string) =>
+      this.setBearerAuth(accessToken)
+        .setHeader('Content-Type', 'application/json')
+        .patch('/me', payloadData, { parseResponse: true })
+        .then((res) => {
+          return {
+            status: 'success',
+            statusCode: res!.status,
+            data: res!.data,
+          }
+        })
+        .catch((e) => {
+          return {
+            status: 'failed',
+            statusCode: e.status,
+            data: e.data.detail,
+          }
+        }),
+
     uploadAvatar: (avatar: FormData, accessToken: string) =>
       this.setBearerAuth(accessToken)
         .post('/me/upload_avatar', avatar)
