@@ -12,7 +12,7 @@ class UsersClient extends HttpClient {
 
   users = {
     getAll: (limit?: number): Promise<{ status: number; data: IUser[] }> =>
-      this.get(limit ? `?limit=${limit}` : ''),
+      this.get(limit ? `?limit=${limit}` : '', { cache: 'no-cache' }),
 
     get: (username: string, accessToken: string): Promise<IUser> =>
       this.setBearerAuth(accessToken)
