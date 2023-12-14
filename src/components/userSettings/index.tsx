@@ -35,12 +35,16 @@ export const UserSettings: React.FC<Props> = ({ userInfo, accessToken }) => {
           ? userCredentials.password
           : undefined,
     }
-    usersService.users.update(payloadData, accessToken).then((res) => {
-      setUser(res.data)
+    usersService.users
+      .update(payloadData, accessToken)
+      .then((res) => {
+        setUser(res.data)
 
-      userCredentials.username !== res.data.username &&
-        router.replace(`/users/${res.data.username}/settings`)
-    })
+        userCredentials.username !== userInfo.username &&
+          (router.replace(`/users/${res.data.username}/settings`),
+          router.refresh())
+      })
+      .catch((e) => console.log(e.data))
   }
 
   return (
