@@ -12,7 +12,7 @@ class UsersClient extends HttpClient {
 
   users = {
     getAll: (limit?: number): Promise<{ status: number; data: IUser[] }> =>
-      this.get(limit ? `?limit=${limit}` : ''),
+      this.get(limit ? `?limit=${limit}` : '', { cache: 'no-cache' }),
 
     get: (username: string, accessToken: string): Promise<IUser> =>
       this.setBearerAuth(accessToken)
@@ -36,6 +36,25 @@ class UsersClient extends HttpClient {
             status: 'success',
             statusCode: res!.status,
             data: [],
+          }
+        })
+        .catch((e) => {
+          return {
+            status: 'failed',
+            statusCode: e.status,
+            data: e.data.detail,
+          }
+        }),
+
+    update: (payloadData: {}, accessToken: string) =>
+      this.setBearerAuth(accessToken)
+        .setHeader('Content-Type', 'application/json')
+        .patch('/me', payloadData, { parseResponse: true })
+        .then((res) => {
+          return {
+            status: 'success',
+            statusCode: res!.status,
+            data: res!.data,
           }
         })
         .catch((e) => {

@@ -1,9 +1,9 @@
-import { usersService } from '@/services'
-import { UserProfile } from '@/components/userProfile'
 import { PrivateWarning } from '@/components/privateWarning'
+import { UserSettings } from '@/components/userSettings'
+import { usersService } from '@/services'
 import { cookies } from 'next/headers'
 
-export default async function UserPage({
+export default async function UserSettingsPage({
   params,
 }: {
   params: { username: string }
@@ -13,8 +13,7 @@ export default async function UserPage({
   if (accessToken) {
     const userInfo = await usersService.users.get(params.username, accessToken)
 
-    return <UserProfile userInfo={userInfo} accessToken={accessToken} />
+    return <UserSettings userInfo={userInfo} accessToken={accessToken} />
   }
-
   return <PrivateWarning />
 }

@@ -12,7 +12,7 @@ export const UsersList: React.FC<Props> = (props) => {
     if (input === '') {
       return user
     } else {
-      return user.username.toLowerCase().startsWith(input)
+      return user.username.toLowerCase().match(input)
     }
   })
   return (

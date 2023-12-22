@@ -103,9 +103,10 @@ export default function LoginPage() {
               inputType={'text'}
               placeholder={'username'}
               text={'Username'}
-              required={true}
+              color="red"
               value={userData.username}
               handleChange={onUsernameChange}
+              required
             />
             <span className="text-sm text-red-400">
               {errors.username}&nbsp;
@@ -115,9 +116,10 @@ export default function LoginPage() {
               inputType={'password'}
               placeholder={'••••••••'}
               text={'Password'}
-              required={true}
+              color="red"
               value={userData.password}
               handleChange={onPasswordChange}
+              required
             />
             <span className="text-sm text-red-400">
               {errors.password}&nbsp;

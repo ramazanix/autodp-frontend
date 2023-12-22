@@ -88,11 +88,12 @@ export default function RegisterPage() {
             <CustomInput
               id={'username'}
               text={'Username'}
+              color="red"
               inputType={'text'}
               placeholder={'My unique nickname'}
-              required={true}
               value={userData.username}
               handleChange={onUsernameChange}
+              required
             />
             <span className="text-sm text-red-400">
               {errors.username}&nbsp;
@@ -100,11 +101,12 @@ export default function RegisterPage() {
             <CustomInput
               id={'password'}
               text={'Password'}
+              color="red"
               inputType={'password'}
               placeholder={'My secret password'}
-              required={true}
               value={userData.password}
               handleChange={onPasswordChange}
+              required
             />
             <span className="text-sm text-red-400">
               {errors.password}&nbsp;
